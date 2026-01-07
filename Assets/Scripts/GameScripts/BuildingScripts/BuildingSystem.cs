@@ -14,6 +14,11 @@ namespace GameScripts.BuildingScripts
             Model = model;
             View = view;
             Model.InitializeBuilding(this, view, data);
+            
+            if (data != null)
+            {
+                Model.CurrentFloors = data.FloorsData;
+            }
         }
         
         public void InitSystem(GameSystemsHandler context)
@@ -27,12 +32,12 @@ namespace GameScripts.BuildingScripts
             Model.UpdateModel(deltaTime, context);
         }
 
-        private void OnHit(RaycastHit hit, GameObject bugPrefab)
+        private void OnHit(RaycastHit hit, string bugAddress, BuildingColors bugColor)
         {
-            _context.CreateAndRegisterBug(bugPrefab, hit.point, this.Model);
+            _context.CreateAndRegisterBug(bugAddress, hit.point, this.Model, bugColor);
         }
         
-        public bool HasFloors => Model.CurrentFloors.Count > 0;
+        public bool HasFloors => Model != null && Model.CurrentFloors != null && Model.CurrentFloors.Count > 0;
         
         public BuildingColors GetTopFloorColor()
         {
@@ -46,6 +51,11 @@ namespace GameScripts.BuildingScripts
             Model.CurrentFloors.RemoveAt(Model.CurrentFloors.Count - 1);
 
             View.RemoveTopFloorView();
+
+            if (!HasFloors)
+            {
+                ConvertToRuins(_context);
+            }
         }
 
         public void DemolishBuilding()

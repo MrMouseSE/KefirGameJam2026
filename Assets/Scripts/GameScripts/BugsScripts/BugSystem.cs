@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace GameScripts.BugsScripts
 {
@@ -72,18 +73,18 @@ namespace GameScripts.BugsScripts
             if (View == null) return;
             
             View.OnAttackAnimationFinished = null; 
-            Object.Destroy(View.gameObject); 
+            Addressables.ReleaseInstance(View.gameObject);
         }
 
-        public void UpdateSystem(float dt, GameSystemsHandler ctx)
+        public void UpdateSystem(float deltaTime, GameSystemsHandler context)
         {
             if (_hasAttacked) return;
             
-            _debugTimer += dt;
+            _debugTimer += deltaTime;
             if (!(_debugTimer > 1.0f)) return;
-                
+            
             _hasAttacked = true;
-            Debug.Log("DEBUG: Симуляция конца анимации атаки");
+            Debug.Log("[DEBUG] Симуляция конца анимации атаки");
             OnAnimationEvent();
         }
     }

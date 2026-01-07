@@ -1,79 +1,94 @@
 using GameScripts.BugsScripts;
 using UnityEngine;
-using GameScripts.BuildingScripts; // Нужно для BuildingView
+using GameScripts.BuildingScripts;
+using GameScripts.Descriptions; // Нужно для BuildingView
 
 namespace GameScripts.CannonScripts
 {
     public class CannonSystem : IGameSystem
     {
         public CannonModel Model;
+        public CannonView View;
         private GameSystemsHandler _context;
-
-        public CannonSystem(CannonModel model)
+        private const string DEFAULT_BUG_KEY = "DefaultBug";
+        
+        public CannonSystem(CannonModel model, CannonView view)
         {
             Model = model;
+            View = view;
         }
 
         public void InitSystem(GameSystemsHandler context)
         {
             _context = context;
+
+            var levelData = context.CurrentLevelDescription;
+            if (levelData != null) Model.LoadLevelAmmo(levelData, DEFAULT_BUG_KEY);
         }
 
         public void UpdateSystem(float deltaTime, GameSystemsHandler context)
         {
+            Model.UpdateCooldown(deltaTime);
         }
 
+        public void Aim(Ray ray)
+        {
+            View.RotateCannon(Physics.Raycast(ray, out RaycastHit hit) ? hit.point : ray.GetPoint(100f));
+        }
+        
         public void TryFire(Ray ray)
         {
+            if (!Model.IsReady)
+            {
+                Debug.LogError("[DEBUG] Перезарядка");
+                return;
+            }
+            
             LogAmmoDebug();
             
-            if (Model.AmmoQueue.Count == 0) return;
-
             if (!Physics.Raycast(ray, out RaycastHit hit)) return;
             
             var buildingView = hit.collider.GetComponentInParent<BuildingView>();
-
             if (buildingView == null) return;
 
-            var bugPrefab = Model.AmmoQueue.Dequeue();
+            View.PlayFireEffects();
             
-            buildingView.ReceiveHit(hit, bugPrefab);
+            var ammoData = Model.GetNextAmmo();
+            
+            var bugAddress = "DefaultBug";
+            
+            buildingView.ReceiveHit(hit, bugAddress, ammoData.Color);
+            
+            Model.SetCooldown(View.FireCooldown);
         }
 
-        public void LogAmmoDebug()
+        public void RemoveCurrentAmmo()
         {
-            if (Model.AmmoQueue.Count == 0)
-            {
-                Debug.LogWarning("[Cannon System] ПУСТО! Нет патронов.");
-                return;
-            }
-
-            var ammoArray = Model.AmmoQueue.ToArray();
-
-            GameObject currentBugGO = ammoArray[0];
-            string currentInfo = GetBugInfo(currentBugGO);
-
-            string nextInfo = "НЕТ (Последний патрон)";
-            if (ammoArray.Length > 1)
-            {
-                GameObject nextBugGO = ammoArray[1];
-                nextInfo = GetBugInfo(nextBugGO);
-            }
-
-            Debug.LogWarning($"[Cannon System] ЗАРЯЖЕН: {currentInfo} || СЛЕДУЮЩИЙ: {nextInfo} || Всего в очереди: {Model.AmmoQueue.Count}");
+            if (!Model.IsReady) return;
+            
+            LogAmmoDebug();
+            
+            Model.GetNextAmmo();
+            Model.SetCooldown(View.FireCooldown);
         }
         
-        private string GetBugInfo(GameObject go)
+        public void LogAmmoDebug()
         {
-            if (go == null) return "null";
-            
-            var view = go.GetComponent<BugView>();
-            if (view != null)
-            {
-                return $"Жук [{view.BugColor}]";
-            }
-            
-            return go.name;
+            var realCount = Model.AmmoQueue.Count;
+
+            var currentAmmo = Model.PeekNextAmmo(0); 
+            var nextAmmo = Model.PeekNextAmmo(1);
+
+            var currentTag = (0 >= realCount) ? "[INF]" : "[REAL]";
+            var nextTag    = (1 >= realCount) ? "[INF]" : "[REAL]";
+
+            var currentInfo = $"{currentTag} {currentAmmo.Color}";
+            var nextInfo    = $"{nextTag} {nextAmmo.Color}";
+
+            var countInfo = realCount == 0 ? "БЕСКОНЕЧНЫЕ" : realCount.ToString();
+            var readyStatus = Model.IsReady ? "ГОТОВ" : $"КД {Model.CurrentCooldown:F1}s";
+
+            Debug.LogWarning($"[Cannon] {readyStatus} | Запас: {countInfo} || Очередь: {currentInfo} -> {nextInfo}");
         }
     }
 }

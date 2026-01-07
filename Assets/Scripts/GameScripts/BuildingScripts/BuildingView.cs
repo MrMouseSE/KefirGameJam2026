@@ -6,7 +6,7 @@ namespace GameScripts.BuildingScripts
 {
     public class BuildingView : MonoBehaviour
     {
-        public Action<RaycastHit, GameObject> OnHitBuilding;
+        public Action<RaycastHit, string, BuildingColors> OnHitBuilding;
         
         public GameObject BuildingPrefab;
         public Transform BuildingTransform;
@@ -17,37 +17,44 @@ namespace GameScripts.BuildingScripts
         public ParticleSystem HitParticles;
         public ParticleSystem DestroyParticles;
         
-        public void ReceiveHit(RaycastHit hit, GameObject bugPayload)
+        public void ReceiveHit(RaycastHit hit, string bugAddress, BuildingColors color)
         {
-            OnHitBuilding?.Invoke(hit, bugPayload);
+            OnHitBuilding?.Invoke(hit, bugAddress, color);
         }
         
         public void RemoveTopFloorView()
         {
-            if (Floors.Count == 0) return;
+            if (Floors == null || Floors.Count == 0) return;
 
             var lastIndex = Floors.Count - 1;
             var floorView = Floors[lastIndex];
 
-            if (floorView.DestroyParticles != null)
+            if (floorView != null && floorView.DestroyParticles != null)
             {
                 floorView.DestroyParticles.transform.SetParent(null);
                 floorView.DestroyParticles.Play();
-                Destroy(floorView.DestroyParticles.gameObject, 1f);
+                Destroy(floorView.DestroyParticles.gameObject, 2f);
+            }
+            else
+            {
+                PlayDestroyEffects();
             }
 
             Floors.RemoveAt(lastIndex);
-            Destroy(floorView.gameObject);
+
+            if (floorView != null)
+            {
+                Destroy(floorView.gameObject);
+            }
         }
 
         public void PlayDestroyEffects()
         {
             if (DestroyParticles == null) return;
             
-            DestroyParticles.transform.SetParent(null); 
             DestroyParticles.Play();
-                
-            Destroy(DestroyParticles.gameObject, DestroyParticles.main.duration);
+
+            // Destroy(DestroyParticles.gameObject, DestroyParticles.main.duration);
         }
     }
 }

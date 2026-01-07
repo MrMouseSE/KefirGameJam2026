@@ -35,6 +35,7 @@ namespace GameScripts.BuildingFactory
                 buildingData.FloorsData.Add(floorData);
             }
             BuildingModel buildingModel = new BuildingModel();
+            buildingModel.CurrentFloors = buildingData.FloorsData;
             BuildingSystem buildingSystem = new BuildingSystem(buildingModel, buildingView, buildingData);
             return buildingSystem;
         }

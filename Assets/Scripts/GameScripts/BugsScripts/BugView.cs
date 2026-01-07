@@ -14,7 +14,7 @@ namespace GameScripts.BugsScripts
         public string DestroyTrigger;
         public ParticleSystem HitParticles;
         public ParticleSystem DestroyParticles;
-        public BuildingColors BugColor;
+        [HideInInspector] public BuildingColors BugColor;
         private int _destroyTrigger;
 
         private void Awake()
@@ -25,6 +25,11 @@ namespace GameScripts.BugsScripts
         public void DestroyView()
         {
             BugAnimator.SetTrigger(_destroyTrigger);
+        }
+        
+        public void SetColor(BuildingColors colorType)
+        {
+            BugColor = colorType;
         }
         
         public void OnAnimationFinishTrigger()

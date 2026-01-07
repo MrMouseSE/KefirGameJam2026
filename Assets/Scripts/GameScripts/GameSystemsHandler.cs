@@ -12,18 +12,24 @@ using GameScripts.Descriptions;
 using GameScripts.InputPlayerSystemScript;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace GameScripts
 {
     public class GameSystemsHandler : MonoBehaviour
     {
+        private const string DEFAULT_BUG_ADDRESS = "DefaultBug";
+        
         public LevelsDescriptionsHolder LevelsDescriptionsHolder;
         public BuildingsPlacerView PlacerView;
-        public GameObject BugPrefab;
+        public CannonView CannonView;
         
         [Space]
         public ChangeLevelHandler ChangeLevelHandler;
 
+        [HideInInspector] public LevelDescription CurrentLevelDescription { get; private set; }
+        
         [HideInInspector] public bool IsBugSpawned;
         [HideInInspector] public BugModel CurrentBug;
         
@@ -47,32 +53,14 @@ namespace GameScripts
         public void InitGameSystems()
         {
             _currentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
-            var currentLevelDescription = LevelsDescriptionsHolder.LevelDescription.Find(x => x.Level == _currentLevel);
-            BuildingStaticFactory.SetLevelDescription(currentLevelDescription);
+            CurrentLevelDescription = LevelsDescriptionsHolder.LevelDescription.Find(x => x.Level == _currentLevel);
+            BuildingStaticFactory.SetLevelDescription(CurrentLevelDescription);
             _gameSystems = new List<IGameSystem>();
-            _gameSystems.Add(new BuildingsSpawnerSystem(new BuildingsSpawnerModel(), currentLevelDescription));
-            _gameSystems.Add(new BuildingsPlacerSystem(new BuildingsPlacerModel(), PlacerView, currentLevelDescription));
+            _gameSystems.Add(new BuildingsSpawnerSystem(new BuildingsSpawnerModel(), CurrentLevelDescription));
+            _gameSystems.Add(new BuildingsPlacerSystem(new BuildingsPlacerModel(), PlacerView, CurrentLevelDescription));
             _gameSystems.Add(new InputPlayerSystem(new InputPlayerModel(), Camera.main));
-
-            var cannonModel = new CannonModel();
-            var levelBugs = new List<GameObject>();
-
-            var totalBugsToSpawn = currentLevelDescription.GetBugsCount();
-
-            for (var i = 0; i < totalBugsToSpawn; i++)
-            {
-                var randomBug = currentLevelDescription.GetRandomBugWeighted();
-        
-                if (randomBug == null) randomBug = BugPrefab;
-        
-                levelBugs.Add(randomBug);
-            }
-
-            cannonModel.LoadLevelAmmo(levelBugs);
-            _gameSystems.Add(new CannonSystem(cannonModel));
-
-            cannonModel.LoadLevelAmmo(levelBugs);
-            _gameSystems.Add(new CannonSystem(cannonModel));
+            
+            _gameSystems.Add(new CannonSystem(new CannonModel(), CannonView));
             
             foreach (var system in _gameSystems)
             {
@@ -148,17 +136,41 @@ namespace GameScripts
             _buildings.Clear();
         }
         
-        public void CreateAndRegisterBug(GameObject prefabToSpawn, Vector3 position, BuildingModel target)
+        public void CreateAndRegisterBug(string addressKey, Vector3 position, BuildingModel target, BuildingColors assignedColor)
         {
-            var finalPrefab = prefabToSpawn != null ? prefabToSpawn : BugPrefab;
+            string keyToLoad = string.IsNullOrEmpty(addressKey) ? DEFAULT_BUG_ADDRESS : addressKey;
 
-            var bugGo = Instantiate(finalPrefab, position, Quaternion.identity);
+            Addressables.InstantiateAsync(keyToLoad, position, Quaternion.identity).Completed += (handle) =>
+            {
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    var bugGo = handle.Result;
+                    
+                    InitializeBugLogic(bugGo, target, assignedColor);
+                }
+                else
+                {
+                    Debug.LogError($"Failed to spawn bug from Addressables. Key: {keyToLoad}");
+                }
+            };
+        }
+        
+        private void InitializeBugLogic(GameObject bugGo, BuildingModel target, BuildingColors assignedColor)
+        {
             var bugView = bugGo.GetComponent<BugView>();
+
+            if (CurrentLevelDescription != null)
+            {
+                var colorData = CurrentLevelDescription.SpriteColorByBuildingColor.Find(x => x.BuildingColor == assignedColor);
+                if (colorData != null && bugView != null)
+                {
+                    bugView.SetColor(assignedColor);
+                }
+            }
 
             var bugModel = new BugModel();
             bugModel.TargetBuilding = target;
-            
-            bugModel.BuildingColor = bugView.BugColor;
+            bugModel.BuildingColor = assignedColor;
 
             var bugSystem = new BugSystem(bugModel, bugView);
             bugSystem.InitSystem(this);
@@ -168,7 +180,7 @@ namespace GameScripts
             CurrentBug = bugModel;
             IsBugSpawned = true;
         }
-        
+
         public void OnBugDied()
         {
             CurrentBug = null;

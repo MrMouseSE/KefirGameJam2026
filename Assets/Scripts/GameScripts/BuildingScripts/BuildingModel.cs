@@ -13,8 +13,8 @@ namespace GameScripts.BuildingScripts
 
         public void UpdateModel(float deltaTime, GameSystemsHandler context)
         {
+            if (!context.IsBugSpawned) return;
             if (context.CurrentBug.TargetBuilding.View != View) return;
-            
         }
     }
 }

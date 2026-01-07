@@ -1,4 +1,4 @@
-using GameScripts.BuildingScripts;
+using GameScripts.Descriptions;
 
 namespace GameScripts.BuildingsPlacerSystemScripts
 {
@@ -7,10 +7,10 @@ namespace GameScripts.BuildingsPlacerSystemScripts
         public BuildingsPlacerModel Model;
         public BuildingsPlacerView View;
 
-        public BuildingsPlacerSystem(BuildingsPlacerModel model, BuildingsPlacerView view)
+        public BuildingsPlacerSystem(BuildingsPlacerModel model, BuildingsPlacerView view, LevelDescription levelDescription)
         {
             Model = model;
-            Model.InitializeModel(view, this);
+            Model.InitializeModel(view, this, levelDescription);
             View = view;
         }
 

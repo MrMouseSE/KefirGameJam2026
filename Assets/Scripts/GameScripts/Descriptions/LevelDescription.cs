@@ -9,11 +9,13 @@ namespace GameScripts.Descriptions
     {
         public int Level;
         public Vector2Int BuildingsCount;
+        public int BuildingsWidthCount;
         public List<BuildingsDescriptions> BuildingsDescriptions;
+        public List<SpriteColorByBuildingColor> SpriteColorByBuildingColor;
 
         public void OnEnable()
         {
-            BuildingsDescriptions = BuildingsDescriptions.OrderByDescending(x => x.BuildingChancePercent).ToList();
+            BuildingsDescriptions = BuildingsDescriptions.OrderBy(x => x.BuildingChancePercent).ToList();
         }
 
         public int GetBuildingsCount()

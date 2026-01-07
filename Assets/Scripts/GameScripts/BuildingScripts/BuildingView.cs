@@ -9,5 +9,9 @@ namespace GameScripts.BuildingScripts
         public Transform BuildingTransform;
         public Transform FloorsTransform;
         public List<FloorView> Floors;
+        
+        [Space(10)]
+        public ParticleSystem HitParticles;
+        public ParticleSystem DestroyParticles;
     }
 }

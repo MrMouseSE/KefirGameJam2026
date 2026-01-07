@@ -1,10 +1,11 @@
+using GameScripts.BuildingScripts;
 using UnityEngine;
 
 namespace GameScripts.BuildingsPlacerSystemScripts
 {
-    public class BuildingsPlacerView
+    public class BuildingsPlacerView : MonoBehaviour
     {
-        public Transform[] BuildingsFirstLinePlaces;
-        public Transform[] BuildingsSecondLinePlaces;
+        public BuildingViewHolder[] BuildingsFirstLinePlaces;
+        public BuildingViewHolder[] BuildingsSecondLinePlaces;
     }
 }

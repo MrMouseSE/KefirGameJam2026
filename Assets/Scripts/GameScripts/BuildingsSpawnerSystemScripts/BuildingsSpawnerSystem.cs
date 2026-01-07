@@ -1,12 +1,15 @@
+using GameScripts.Descriptions;
+
 namespace GameScripts.BuildingsSpawnerSystemScripts
 {
     public class BuildingsSpawnerSystem : IGameSystem
     {
-        public BuildingSpawnerModel Model;
+        public BuildingsSpawnerModel Model;
 
-        public BuildingsSpawnerSystem(BuildingSpawnerModel model)
+        public BuildingsSpawnerSystem(BuildingsSpawnerModel model, LevelDescription levelDescription)
         {
             Model = model;
+            Model.InitializeLevelBuildings(levelDescription, this);
         }
 
         public void InitSystem(GameSystemsHandler context)
@@ -15,6 +18,7 @@ namespace GameScripts.BuildingsSpawnerSystemScripts
 
         public void UpdateSystem(float deltaTime, GameSystemsHandler context)
         {
+            Model.UpdateModel(deltaTime, context);
         }
     }
 }

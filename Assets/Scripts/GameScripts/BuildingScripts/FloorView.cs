@@ -6,6 +6,7 @@ namespace GameScripts.BuildingScripts
     {
         public GameObject FloorPrefab;
         public Transform FloorTransform;
+        public SpriteRenderer FloorRenderer;
         public ParticleSystem HitParticles;
         public ParticleSystem DestroyParticles;
     }

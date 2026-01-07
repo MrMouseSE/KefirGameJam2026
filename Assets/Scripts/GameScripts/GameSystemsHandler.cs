@@ -1,9 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using GameScripts.BugsScripts;
+using GameScripts.BuildingFactory;
+using GameScripts.BuildingScripts;
 using GameScripts.BuildingsPlacerSystemScripts;
 using GameScripts.BuildingsSpawnerSystemScripts;
+using GameScripts.ChangeLevelScript;
 using GameScripts.Descriptions;
+using GameScripts.InputPlayerSystemScript;
 using UnityEngine;
 
 namespace GameScripts
@@ -13,39 +18,90 @@ namespace GameScripts
         public LevelsDescriptionsHolder LevelsDescriptionsHolder;
         public BuildingsPlacerView PlacerView;
         
+        [Space]
+        public ChangeLevelHandler ChangeLevelHandler;
+
+        [HideInInspector]
+        public bool IsBugSpawned;
+        [HideInInspector]
+        public BugModel CurrentBug;
+        
         private int _currentLevel = 0;
         private List<IGameSystem> _gameSystems;
         
-        public BugModel CurrentBug;
+        private bool _isGameRunnign;
+        
+        private List<IGameSystem> _buildings = new List<IGameSystem>();
+        
+        private bool _isBuildingSpawned;
+        
+        private List<IGameSystem> _systemsToRemove = new List<IGameSystem>();
+
+        private void Awake()
+        {
+            InitGameSystems();
+        }
 
         public void InitGameSystems()
         {
             _currentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
+            var currentLevelDescription = LevelsDescriptionsHolder.LevelDescription.Find(x => x.Level == _currentLevel);
+            BuildingStaticFactory.SetLevelDescription(currentLevelDescription);
             _gameSystems = new List<IGameSystem>();
-            BuildingSpawnerModel spawnerModel = new BuildingSpawnerModel();
-            spawnerModel.InitializeLevelBuildings(LevelsDescriptionsHolder.LevelDescription.Find(x => x.Level == _currentLevel));
-            _gameSystems.Add(new BuildingsSpawnerSystem(new BuildingSpawnerModel()));
-            _gameSystems.Add(new BuildingsPlacerSystem(new BuildingsPlacerModel(), PlacerView));
-            
+            _gameSystems.Add(new BuildingsSpawnerSystem(new BuildingsSpawnerModel(), currentLevelDescription));
+            _gameSystems.Add(new BuildingsPlacerSystem(new BuildingsPlacerModel(), PlacerView, currentLevelDescription));
+            _gameSystems.Add(new InputPlayerSystem(new InputPlayerModel()));
+            _isGameRunnign = true;
+        }
+        
+        public void AddBuildingSystem(BuildingSystem buildingSystem, bool isBuildingSpawned)
+        {
+            _isBuildingSpawned = isBuildingSpawned;
+            _buildings.Add(buildingSystem);
+        }
+        
+        public IGameSystem GetGameSystemByType(Type type)
+        {
+            return _gameSystems.Find(gameSystem => gameSystem.GetType() == type);
+        }
+
+        public void CompleteCurrentLevel()
+        {
+            _isGameRunnign = false;
+            _currentLevel++;
+            PlayerPrefs.SetInt("CurrentLevel", _currentLevel);
+            ChangeLevelHandler.ChangeLevel(this);
+        }
+
+        public void AddSystemToDelete(IGameSystem system)
+        {
+            _systemsToRemove.Add(system);
         }
         
         private void Update()
         {
+            if (!_isGameRunnign) return;
+
+            if (_isBuildingSpawned) InitializeBuildings();
+            
+            _gameSystems = _gameSystems.Except(_systemsToRemove).ToList();
+            
             foreach (var gameSystem in _gameSystems)
             {
                 gameSystem.UpdateSystem(Time.deltaTime, this);
             }
         }
 
-        public void SetNextLevel()
+        private void InitializeBuildings()
         {
-            _currentLevel++;
-            PlayerPrefs.SetInt("CurrentLevel", _currentLevel);
-        }
-
-        public IGameSystem GetGameSystemByType(Type type)
-        {
-            return _gameSystems.Find(gameSystem => gameSystem.GetType() == type);
+            BuildingsPlacerSystem placerSystem =
+                (BuildingsPlacerSystem)GetGameSystemByType(typeof(BuildingsPlacerSystem));
+            foreach (var gameSystem in _buildings)
+            {
+                _gameSystems.Add(gameSystem);
+                placerSystem.Model.AddBuilding((BuildingSystem)gameSystem);
+            }
+            _buildings.Clear();
         }
     }
 }

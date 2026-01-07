@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace GameScripts.Descriptions
 {
+    [CreateAssetMenu(menuName = "Create BuildingsDescriptions", fileName = "BuildingsDescriptions", order = 0)]
     public class BuildingsDescriptions : ScriptableObject
     {
         public float BuildingChancePercent;

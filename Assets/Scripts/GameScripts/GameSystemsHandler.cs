@@ -50,7 +50,7 @@ namespace GameScripts
             _gameSystems = new List<IGameSystem>();
             _gameSystems.Add(new BuildingsSpawnerSystem(new BuildingsSpawnerModel(), currentLevelDescription));
             _gameSystems.Add(new BuildingsPlacerSystem(new BuildingsPlacerModel(), PlacerView, currentLevelDescription));
-            _gameSystems.Add(new InputPlayerSystem(new InputPlayerModel()));
+            _gameSystems.Add(new InputPlayerSystem(new InputPlayerModel(), Camera.main));
             _isGameRunnign = true;
         }
         

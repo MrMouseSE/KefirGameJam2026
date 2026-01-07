@@ -9,6 +9,7 @@ namespace GameScripts.Descriptions
     {
         public int Level;
         public Vector2Int BuildingsCount;
+        public Vector2Int BugsCount;
         public int BuildingsWidthCount;
         public List<BuildingsDescriptions> BuildingsDescriptions;
         public List<SpriteColorByBuildingColor> SpriteColorByBuildingColor;
@@ -21,6 +22,11 @@ namespace GameScripts.Descriptions
         public int GetBuildingsCount()
         {
             return Random.Range(BuildingsCount.x, BuildingsCount.y);
+        }
+
+        public int GetBugsCount()
+        {
+            return Random.Range(BugsCount.x, BugsCount.y);
         }
 
         public BuildingsDescriptions GetBuildingDescriptionByChance(float chance)

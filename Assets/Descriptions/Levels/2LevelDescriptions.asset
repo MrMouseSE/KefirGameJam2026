@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameScripts.Descriptions.LevelDescription
   Level: 1
   BuildingsCount: {x: 10, y: 20}
+  BugsCount: {x: 20, y: 30}
   BuildingsWidthCount: 4
   BuildingsDescriptions:
   - {fileID: 11400000, guid: 8c778fd289ad54e4c99d156828edf77e, type: 2}

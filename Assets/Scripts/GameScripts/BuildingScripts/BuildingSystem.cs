@@ -43,7 +43,6 @@ namespace GameScripts.BuildingScripts
         {
             if (!HasFloors) return;
 
-            var floorToRemove = Model.CurrentFloors.Last();
             Model.CurrentFloors.RemoveAt(Model.CurrentFloors.Count - 1);
 
             View.RemoveTopFloorView();

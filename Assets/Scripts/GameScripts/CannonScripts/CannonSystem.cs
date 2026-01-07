@@ -40,7 +40,7 @@ namespace GameScripts.CannonScripts
             buildingView.ReceiveHit(hit, bugPrefab);
         }
 
-        private void LogAmmoDebug()
+        public void LogAmmoDebug()
         {
             if (Model.AmmoQueue.Count == 0)
             {

@@ -27,10 +27,19 @@ namespace GameScripts.InputPlayerSystemScript
             }
             
             Model.PlayerActions.Player.Attack.performed += OnAttackPerformed;
+            Model.PlayerActions.Player.RemoveAmmo.performed += OnRemovePerformed;
         }
 
         public void UpdateSystem(float deltaTime, GameSystemsHandler context)
         {
+        }
+
+        private void OnRemovePerformed(InputAction.CallbackContext ctx)
+        {
+            if (_cannonSystem.Model.AmmoQueue.Count == 0) return;
+            
+            _cannonSystem.Model.AmmoQueue.Dequeue();
+            _cannonSystem.LogAmmoDebug();
         }
 
         private void OnAttackPerformed(InputAction.CallbackContext ctx)

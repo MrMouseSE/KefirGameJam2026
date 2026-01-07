@@ -111,7 +111,7 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Remove"",
+                    ""name"": ""RemoveAmmo"",
                     ""type"": ""Button"",
                     ""id"": ""82d15209-2354-48f0-99c1-879632025fcb"",
                     ""expectedControlType"": """",
@@ -150,7 +150,7 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Remove"",
+                    ""action"": ""RemoveAmmo"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -163,7 +163,7 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
-        m_Player_Remove = m_Player.FindAction("Remove", throwIfNotFound: true);
+        m_Player_RemoveAmmo = m_Player.FindAction("RemoveAmmo", throwIfNotFound: true);
     }
 
     ~@PlayerActionsMap()
@@ -246,7 +246,7 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Attack;
-    private readonly InputAction m_Player_Remove;
+    private readonly InputAction m_Player_RemoveAmmo;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -267,9 +267,9 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Remove".
+        /// Provides access to the underlying input action "Player/RemoveAmmo".
         /// </summary>
-        public InputAction @Remove => m_Wrapper.m_Player_Remove;
+        public InputAction @RemoveAmmo => m_Wrapper.m_Player_RemoveAmmo;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -302,9 +302,9 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
-            @Remove.started += instance.OnRemove;
-            @Remove.performed += instance.OnRemove;
-            @Remove.canceled += instance.OnRemove;
+            @RemoveAmmo.started += instance.OnRemoveAmmo;
+            @RemoveAmmo.performed += instance.OnRemoveAmmo;
+            @RemoveAmmo.canceled += instance.OnRemoveAmmo;
         }
 
         /// <summary>
@@ -322,9 +322,9 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
-            @Remove.started -= instance.OnRemove;
-            @Remove.performed -= instance.OnRemove;
-            @Remove.canceled -= instance.OnRemove;
+            @RemoveAmmo.started -= instance.OnRemoveAmmo;
+            @RemoveAmmo.performed -= instance.OnRemoveAmmo;
+            @RemoveAmmo.canceled -= instance.OnRemoveAmmo;
         }
 
         /// <summary>
@@ -380,11 +380,11 @@ public partial class @PlayerActionsMap: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAttack(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Remove" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "RemoveAmmo" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnRemove(InputAction.CallbackContext context);
+        void OnRemoveAmmo(InputAction.CallbackContext context);
     }
 }

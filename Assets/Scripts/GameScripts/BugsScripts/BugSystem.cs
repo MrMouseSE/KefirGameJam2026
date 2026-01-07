@@ -20,6 +20,8 @@ namespace GameScripts.BugsScripts
 
         public void InitSystem(GameSystemsHandler context)
         {
+            _context = context;
+            
             View.OnAttackAnimationFinished += OnAnimationEvent;
 
             View.PlaySpawnAnimation();

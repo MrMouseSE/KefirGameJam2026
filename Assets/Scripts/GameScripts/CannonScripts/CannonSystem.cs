@@ -1,7 +1,5 @@
-using GameScripts.BugsScripts;
 using UnityEngine;
 using GameScripts.BuildingScripts;
-using GameScripts.Descriptions; // Нужно для BuildingView
 
 namespace GameScripts.CannonScripts
 {

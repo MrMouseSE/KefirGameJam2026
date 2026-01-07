@@ -1,5 +1,3 @@
-using UnityEngine.InputSystem;
-
 namespace GameScripts.InputPlayerSystemScript
 {
     public class InputPlayerModel

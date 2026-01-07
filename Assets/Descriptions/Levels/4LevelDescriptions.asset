@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameScripts.Descriptions.LevelDescription
   Level: 3
   BuildingsCount: {x: 50, y: 60}
+  BugsCount: {x: 60, y: 70}
   BuildingsWidthCount: 6
   BuildingsDescriptions:
-  - {fileID: 11400000, guid: 8c778fd289ad54e4c99d156828edf77e, type: 2}
-  - {fileID: 11400000, guid: c2d4ca95265500f47afe920cff38c284, type: 2}
   - {fileID: 11400000, guid: 60bcdc5c01240574984586f9d610f9d5, type: 2}
+  - {fileID: 11400000, guid: c2d4ca95265500f47afe920cff38c284, type: 2}
+  - {fileID: 11400000, guid: 8c778fd289ad54e4c99d156828edf77e, type: 2}
   SpriteColorByBuildingColor:
   - BuildingColor: 0
     SpriteColorValue: {r: 0.823, g: 0.22220999, b: 0.22220999, a: 1}

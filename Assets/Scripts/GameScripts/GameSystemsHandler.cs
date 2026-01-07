@@ -85,6 +85,7 @@ namespace GameScripts
             if (_isBuildingSpawned) InitializeBuildings();
             
             _gameSystems = _gameSystems.Except(_systemsToRemove).ToList();
+            _systemsToRemove.Clear();
             
             foreach (var gameSystem in _gameSystems)
             {

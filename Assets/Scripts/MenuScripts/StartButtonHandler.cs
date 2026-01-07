@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace MenuScripts
@@ -16,7 +17,7 @@ namespace MenuScripts
 
         private void StartMethod()
         {
-            SceneAsset.LoadSceneAsync();
+            SceneAsset.LoadSceneAsync(LoadSceneMode.Additive);
         }
     }
 }

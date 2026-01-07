@@ -6,9 +6,11 @@ using GameScripts.BuildingFactory;
 using GameScripts.BuildingScripts;
 using GameScripts.BuildingsPlacerSystemScripts;
 using GameScripts.BuildingsSpawnerSystemScripts;
+using GameScripts.CannonScripts;
 using GameScripts.ChangeLevelScript;
 using GameScripts.Descriptions;
 using GameScripts.InputPlayerSystemScript;
+using UnityEditor;
 using UnityEngine;
 
 namespace GameScripts
@@ -17,14 +19,13 @@ namespace GameScripts
     {
         public LevelsDescriptionsHolder LevelsDescriptionsHolder;
         public BuildingsPlacerView PlacerView;
+        public GameObject BugPrefab;
         
         [Space]
         public ChangeLevelHandler ChangeLevelHandler;
 
-        [HideInInspector]
-        public bool IsBugSpawned;
-        [HideInInspector]
-        public BugModel CurrentBug;
+        [HideInInspector] public bool IsBugSpawned;
+        [HideInInspector] public BugModel CurrentBug;
         
         private int _currentLevel = 0;
         private List<IGameSystem> _gameSystems;
@@ -36,6 +37,7 @@ namespace GameScripts
         private bool _isBuildingSpawned;
         
         private List<IGameSystem> _systemsToRemove = new List<IGameSystem>();
+        private List<IGameSystem> _systemsToAdd = new();
 
         private void Awake()
         {
@@ -51,6 +53,32 @@ namespace GameScripts
             _gameSystems.Add(new BuildingsSpawnerSystem(new BuildingsSpawnerModel(), currentLevelDescription));
             _gameSystems.Add(new BuildingsPlacerSystem(new BuildingsPlacerModel(), PlacerView, currentLevelDescription));
             _gameSystems.Add(new InputPlayerSystem(new InputPlayerModel(), Camera.main));
+
+            var cannonModel = new CannonModel();
+            var levelBugs = new List<GameObject>();
+
+            var totalBugsToSpawn = currentLevelDescription.GetBugsCount();
+
+            for (var i = 0; i < totalBugsToSpawn; i++)
+            {
+                var randomBug = currentLevelDescription.GetRandomBugWeighted();
+        
+                if (randomBug == null) randomBug = BugPrefab;
+        
+                levelBugs.Add(randomBug);
+            }
+
+            cannonModel.LoadLevelAmmo(levelBugs);
+            _gameSystems.Add(new CannonSystem(cannonModel));
+
+            cannonModel.LoadLevelAmmo(levelBugs);
+            _gameSystems.Add(new CannonSystem(cannonModel));
+            
+            foreach (var system in _gameSystems)
+            {
+                system.InitSystem(this);
+            }
+            
             _isGameRunnign = true;
         }
         
@@ -77,15 +105,29 @@ namespace GameScripts
         {
             _systemsToRemove.Add(system);
         }
+
+        public void AddNewSystem(IGameSystem system)
+        {
+            _systemsToAdd.Add(system);
+        }
         
         private void Update()
         {
             if (!_isGameRunnign) return;
 
+            if (_systemsToAdd.Count > 0)
+            {
+                _gameSystems.AddRange(_systemsToAdd);
+                _systemsToAdd.Clear();
+            }
+            
             if (_isBuildingSpawned) InitializeBuildings();
             
-            _gameSystems = _gameSystems.Except(_systemsToRemove).ToList();
-            _systemsToRemove.Clear();
+            if (_systemsToRemove.Count > 0)
+            {
+                _gameSystems = _gameSystems.Except(_systemsToRemove).ToList();
+                _systemsToRemove.Clear();
+            }
             
             foreach (var gameSystem in _gameSystems)
             {
@@ -95,14 +137,42 @@ namespace GameScripts
 
         private void InitializeBuildings()
         {
-            BuildingsPlacerSystem placerSystem =
-                (BuildingsPlacerSystem)GetGameSystemByType(typeof(BuildingsPlacerSystem));
+            BuildingsPlacerSystem placerSystem = (BuildingsPlacerSystem)GetGameSystemByType(typeof(BuildingsPlacerSystem));
+            
             foreach (var gameSystem in _buildings)
             {
+                gameSystem.InitSystem(this);
                 _gameSystems.Add(gameSystem);
                 placerSystem.Model.AddBuilding((BuildingSystem)gameSystem);
             }
             _buildings.Clear();
+        }
+        
+        public void CreateAndRegisterBug(GameObject prefabToSpawn, Vector3 position, BuildingModel target)
+        {
+            var finalPrefab = prefabToSpawn != null ? prefabToSpawn : BugPrefab;
+
+            var bugGo = Instantiate(finalPrefab, position, Quaternion.identity);
+            var bugView = bugGo.GetComponent<BugView>();
+
+            var bugModel = new BugModel();
+            bugModel.TargetBuilding = target;
+            
+            bugModel.BuildingColor = bugView.BugColor;
+
+            var bugSystem = new BugSystem(bugModel, bugView);
+            bugSystem.InitSystem(this);
+
+            AddNewSystem(bugSystem);
+
+            CurrentBug = bugModel;
+            IsBugSpawned = true;
+        }
+        
+        public void OnBugDied()
+        {
+            CurrentBug = null;
+            IsBugSpawned = false;
         }
     }
 }

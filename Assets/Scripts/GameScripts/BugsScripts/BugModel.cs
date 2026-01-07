@@ -16,15 +16,14 @@ namespace GameScripts.BugsScripts
 
         private float _bugLiveTime;
 
-        public void UpdateModel(float deltaTime, GameSystemsHandler context)
-        {
-            _bugLiveTime -= deltaTime;
-            if (_bugLiveTime > 0f) return;
-        }
+        public bool IsDead;
 
-        private void OnDestroy()
+        public void Initialize(BugSystem system, BugView view, BuildingModel target)
         {
-            View.DestroyView();
+            System = system;
+            View = view;
+            TargetBuilding = target;
+            IsDead = false;
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using GameScripts.BugsScripts;
 using UnityEngine;
 
 namespace GameScripts.Descriptions
@@ -10,6 +11,7 @@ namespace GameScripts.Descriptions
         public int Level;
         public Vector2Int BuildingsCount;
         public Vector2Int BugsCount;
+        public List<BugSpawnData> AvailableBugs;
         public int BuildingsWidthCount;
         public List<BuildingsDescriptions> BuildingsDescriptions;
         public List<SpriteColorByBuildingColor> SpriteColorByBuildingColor;
@@ -39,6 +41,26 @@ namespace GameScripts.Descriptions
                 }
             }
             return BuildingsDescriptions[^1];
+        }
+        
+        public GameObject GetRandomBugWeighted()
+        {
+            if (AvailableBugs == null || AvailableBugs.Count == 0) return null;
+
+            var totalWeight = AvailableBugs.Sum(bugData => bugData.SpawnWeight);
+
+            var randomValue = Random.Range(0, totalWeight);
+
+            foreach (var bugData in AvailableBugs)
+            {
+                if (randomValue < bugData.SpawnWeight)
+                {
+                    return bugData.BugPrefab;
+                }
+                randomValue -= bugData.SpawnWeight;
+            }
+
+            return AvailableBugs[0].BugPrefab;
         }
     }
 }

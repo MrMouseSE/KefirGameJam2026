@@ -15,6 +15,13 @@ MonoBehaviour:
   Level: 0
   BuildingsCount: {x: 10, y: 20}
   BugsCount: {x: 20, y: 30}
+  AvailableBugs:
+  - Name: Bug_Red
+    BugPrefab: {fileID: 9186254784663174487, guid: d1dc2b9cdf271b64d95662df0008b5ee, type: 3}
+    SpawnWeight: 50
+  - Name: Bug_Blue
+    BugPrefab: {fileID: 9186254784663174487, guid: dd400aa30760bbf48a620f83725b2977, type: 3}
+    SpawnWeight: 50
   BuildingsWidthCount: 4
   BuildingsDescriptions:
   - {fileID: 11400000, guid: 9cfc3723ecf07c44bb6dc1c037ca3d3a, type: 2}

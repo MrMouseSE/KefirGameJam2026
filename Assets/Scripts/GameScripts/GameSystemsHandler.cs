@@ -85,11 +85,22 @@ namespace GameScripts
             if (_isBuildingSpawned) InitializeBuildings();
             
             _gameSystems = _gameSystems.Except(_systemsToRemove).ToList();
+            RemoveBuilding();
             _systemsToRemove.Clear();
             
             foreach (var gameSystem in _gameSystems)
             {
                 gameSystem.UpdateSystem(Time.deltaTime, this);
+            }
+        }
+
+        private void RemoveBuilding()
+        {
+            BuildingsPlacerSystem placerSystem =
+                (BuildingsPlacerSystem)GetGameSystemByType(typeof(BuildingsPlacerSystem));
+            foreach (var gameSystem in _systemsToRemove.Where(gameSystem => gameSystem.GetType() == typeof(BuildingSystem)))
+            {
+                placerSystem.Model.RemoveBuilding((BuildingSystem)gameSystem);
             }
         }
 

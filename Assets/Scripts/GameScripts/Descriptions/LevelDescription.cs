@@ -1,0 +1,44 @@
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+namespace GameScripts.Descriptions
+{
+    [CreateAssetMenu(menuName = "Create LevelDescriptions", fileName = "LevelDescriptions", order = 0)]
+    public class LevelDescription : ScriptableObject
+    {
+        public int Level;
+        public Vector2Int BuildingsCount;
+        public Vector2Int BugsCount;
+        public int BuildingsWidthCount;
+        public List<BuildingsDescriptions> BuildingsDescriptions;
+        public List<SpriteColorByBuildingColor> SpriteColorByBuildingColor;
+
+        public void OnEnable()
+        {
+            BuildingsDescriptions = BuildingsDescriptions.OrderBy(x => x.BuildingChancePercent).ToList();
+        }
+
+        public int GetBuildingsCount()
+        {
+            return Random.Range(BuildingsCount.x, BuildingsCount.y);
+        }
+
+        public int GetBugsCount()
+        {
+            return Random.Range(BugsCount.x, BugsCount.y);
+        }
+
+        public BuildingsDescriptions GetBuildingDescriptionByChance(float chance)
+        {
+            for (int i = 0; i < BuildingsDescriptions.Count; i++)
+            {
+                if (BuildingsDescriptions[i].BuildingChancePercent >= chance)
+                {
+                    return BuildingsDescriptions[i];
+                }
+            }
+            return BuildingsDescriptions[^1];
+        }
+    }
+}

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f95f6055a1141c5ac68475c8a0b14db, type: 3}
+  m_Name: 2LevelDescriptions
+  m_EditorClassIdentifier: Assembly-CSharp::GameScripts.Descriptions.LevelDescription
+  Level: 1
+  BuildingsCount: {x: 10, y: 20}
+  BugsCount: {x: 20, y: 30}
+  BuildingsWidthCount: 4
+  BuildingsDescriptions:
+  - {fileID: 11400000, guid: 8c778fd289ad54e4c99d156828edf77e, type: 2}
+  SpriteColorByBuildingColor:
+  - BuildingColor: 0
+    SpriteColorValue: {r: 0.823, g: 0.22220999, b: 0.22220999, a: 1}
+  - BuildingColor: 1
+    SpriteColorValue: {r: 0.17221434, g: 0.3688684, b: 0.8113208, a: 1}
+  - BuildingColor: 2
+    SpriteColorValue: {r: 0.14301194, g: 0.5943396, b: 0.13737096, a: 1}
+  - BuildingColor: 3
+    SpriteColorValue: {r: 0.7830189, g: 0.7024806, b: 0.13665895, a: 1}

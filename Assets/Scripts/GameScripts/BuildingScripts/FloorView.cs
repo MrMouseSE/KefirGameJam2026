@@ -2,10 +2,11 @@ using UnityEngine;
 
 namespace GameScripts.BuildingScripts
 {
-    public class FloorHandler : MonoBehaviour
+    public class FloorView : MonoBehaviour
     {
         public GameObject FloorPrefab;
         public Transform FloorTransform;
+        public SpriteRenderer FloorRenderer;
         public ParticleSystem HitParticles;
         public ParticleSystem DestroyParticles;
     }

@@ -5,7 +5,7 @@ namespace GameScripts.BugsScripts
 {
     public class BugModel
     {
-        public BuildingColors BuildingColor;
+        public BuildingColors BugColor;
         
         public BugSystem System;
         public BugView View;
@@ -22,9 +22,25 @@ namespace GameScripts.BugsScripts
             if (_bugLiveTime > 0f) return;
         }
 
+        public void BugAnimationPlay()
+        {
+            //TODO: bug eating animation
+        }
+
+        public void DestroyBug()
+        {
+            OnBugDestroyed?.Invoke();
+            OnDestroy();
+        }
+
         private void OnDestroy()
         {
             View.DestroyView();
+        }
+
+        private void SetBugOnBuilding()
+        {
+            View.BugTransform.position = TargetBuilding.GetCurrentFloorTransform().position;
         }
     }
 }

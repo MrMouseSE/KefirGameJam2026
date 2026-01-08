@@ -36,7 +36,7 @@ namespace GameScripts
 
         private List<IGameSystem> _systemsToRemove = new List<IGameSystem>();
         private List<IGameSystem> _systemsToAdd = new();
-
+        
         private void Awake()
         {
             InitGameSystems();
@@ -51,7 +51,7 @@ namespace GameScripts
             _gameSystems.Add(new BuildingsSpawnerSystem(new BuildingsSpawnerModel(), CurrentLevelDescription));
             _gameSystems.Add(new BuildingsPlacerSystem(new BuildingsPlacerModel(), PlacerView,
                 CurrentLevelDescription));
-            _gameSystems.Add(new InputPlayerSystem(new InputPlayerModel(), Camera.main));
+            _gameSystems.Add(new InputPlayerSystem(this, new InputPlayerModel(), Camera.main));
             _gameSystems.Add(new BugSpawnSystem(new BugSpawnModel()));
             _gameSystems.Add(new CannonSystem(new CannonModel(), CannonView));
 

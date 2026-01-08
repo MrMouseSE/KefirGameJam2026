@@ -832,9 +832,7 @@ MonoBehaviour:
   LevelsDescriptionsHolder: {fileID: 11400000, guid: 88a0ee97a200d314d84077fc20b6d828, type: 2}
   PlacerView: {fileID: 724179162}
   CannonView: {fileID: 1170346536}
-  BugPrefab: {fileID: 9186254784663174487, guid: d1dc2b9cdf271b64d95662df0008b5ee, type: 3}
   ChangeLevelHandler: {fileID: 1283639184}
-  IsBugSpawned: 0
 --- !u!1 &1141212059
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,6 +914,7 @@ MonoBehaviour:
   FirePoint: {fileID: 117921574}
   ShootParticles: {fileID: 0}
   FireCooldown: 1.2
+  CannonRotatonSpeed: 50
 --- !u!1 &1235869012
 GameObject:
   m_ObjectHideFlags: 0

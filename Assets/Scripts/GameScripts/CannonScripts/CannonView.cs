@@ -8,15 +8,7 @@ namespace GameScripts.CannonScripts
         public Transform FirePoint;
         public ParticleSystem ShootParticles;
         public float FireCooldown = 0.5f;
-        
-        public void PlayFireEffects()
-        {
-            ShootParticles.Play();
-        }
+        public float CannonRotatonSpeed = 150f;
 
-        public void RotateCannon(Vector3 lookTarget)
-        {
-            CannonRoot.LookAt(lookTarget);
-        }
     }
 }

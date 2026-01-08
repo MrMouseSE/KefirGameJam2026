@@ -7,10 +7,6 @@ namespace GameScripts.BugsScripts
 {
     public class BugSpawnModel
     {
-        private const string DEFAULT_BUG_ADDRESS = "DefaultBug";
-
-        public bool IsBugSpawned;
-        public BugModel CurrentBug;
         private GameSystemsHandler _context;
 
         public void Initialize(GameSystemsHandler context)
@@ -18,51 +14,36 @@ namespace GameScripts.BugsScripts
             _context = context;
         }
 
-        public void CreateAndRegisterBug(string addressKey, Vector3 position, BuildingModel target, BuildingColors assignedColor)
+        public void CreateBug(string addressKey, Vector3 position, BuildingModel target, BuildingColors color)
         {
-            var keyToLoad = string.IsNullOrEmpty(addressKey) ? DEFAULT_BUG_ADDRESS : addressKey;
-
-            Addressables.InstantiateAsync(keyToLoad, position, Quaternion.identity).Completed += (handle) =>
+            Addressables.InstantiateAsync(addressKey, position, Quaternion.identity).Completed += (handle) =>
             {
                 if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
-                    var bugGo = handle.Result;
-
-                    InitializeBugLogic(bugGo, target, assignedColor);
+                    SetupNewBug(handle.Result, target, color);
                 }
                 else
                 {
-                    Debug.LogError($"Failed to spawn bug from Addressables. Key: {keyToLoad}");
+                    Debug.LogError($"Can't spawn bug: {addressKey}");
                 }
             };
         }
 
-        private void InitializeBugLogic(GameObject bugGo, BuildingModel target, BuildingColors assignedColor)
+        private void SetupNewBug(GameObject go, BuildingModel target, BuildingColors color)
         {
-            var bugView = bugGo.GetComponent<BugView>();
+            var view = go.GetComponent<BugView>();
+            var model = new BugModel();
+            var system = new BugSystem(model, view);
 
-            if (_context.CurrentLevelDescription != null)
-            {
-                bugView.SetColor(assignedColor);
-            }
-
-            var bugModel = new BugModel();
-            bugModel.TargetBuilding = target;
-            bugModel.BugColor = assignedColor;
-
-            var bugSystem = new BugSystem(bugModel, bugView);
-            bugSystem.InitSystem(_context);
-
-            _context.AddNewSystem(bugSystem);
-
-            CurrentBug = bugModel;
-            IsBugSpawned = true;
+            model.Initialize(system, view, target, color, _context);
+            
+            system.InitSystem(_context);
+            _context.AddNewSystem(system);
         }
 
-        public void OnBugDied()
+        public void NotifyBugDied(BugModel bug)
         {
-            CurrentBug = null;
-            IsBugSpawned = false;
+            
         }
     }
 }

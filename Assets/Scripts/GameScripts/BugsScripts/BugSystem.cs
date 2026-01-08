@@ -7,11 +7,8 @@ namespace GameScripts.BugsScripts
     {
         public BugModel Model;
         public BugView View;
-        private GameSystemsHandler _context;
         
-        //DEBUG
-        private float _debugTimer = 0f;
-        private bool _hasAttacked = false;
+        private GameSystemsHandler _context;
         
         public BugSystem(BugModel model, BugView view)
         {
@@ -22,72 +19,11 @@ namespace GameScripts.BugsScripts
         public void InitSystem(GameSystemsHandler context)
         {
             _context = context;
-            
-            View.OnAttackAnimationFinished += OnAnimationEvent;
-
-            View.PlaySpawnAnimation();
-        }
-
-        private void OnAnimationEvent()
-        {
-            if (Model.IsDead) return;
-
-            var targetBuilding = Model.TargetBuilding;
-
-            if (targetBuilding == null || targetBuilding.System == null)
-            {
-                KillBug();
-                return;
-            }
-
-            while (targetBuilding.System.HasFloors)
-            {
-                var topFloorColor = targetBuilding.System.GetTopFloorColor();
-
-                if (topFloorColor == Model.BugColor)
-                {
-                    targetBuilding.System.RemoveTopFloor();
-                }
-                else
-                {
-                    KillBug();
-                    return;
-                }
-            }
-
-            KillBug();
         }
         
-        private void KillBug()
-        {
-            if (Model.IsDead) return;
-            
-            Model.IsDead = true;
-            _context.AddSystemToDelete(this);
-
-            var system = _context.GetGameSystemByType(typeof(BugSpawnSystem)) as BugSpawnSystem;
-            
-            if (system.Model.CurrentBug == this.Model) 
-            {
-                system.Model.OnBugDied();
-            }
-
-            if (View == null) return;
-            
-            View.OnAttackAnimationFinished = null; 
-            Addressables.ReleaseInstance(View.gameObject);
-        }
-
         public void UpdateSystem(float deltaTime, GameSystemsHandler context)
         {
-            if (_hasAttacked) return;
-            
-            _debugTimer += deltaTime;
-            if (!(_debugTimer > 1.0f)) return;
-            
-            _hasAttacked = true;
-            Debug.Log("[DEBUG] Симуляция конца анимации атаки");
-            OnAnimationEvent();
+            Model.UpdateModel(deltaTime);
         }
     }
 }

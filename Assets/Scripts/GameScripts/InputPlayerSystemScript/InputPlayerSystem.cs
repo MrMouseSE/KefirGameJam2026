@@ -7,61 +7,19 @@ namespace GameScripts.InputPlayerSystemScript
     public class InputPlayerSystem : IGameSystem
     {
         public InputPlayerModel Model;
-        private CannonSystem _cannonSystem;
-        private Camera _camera;
         
-        public InputPlayerSystem(InputPlayerModel model, Camera camera)
+        public InputPlayerSystem(GameSystemsHandler context, InputPlayerModel model, Camera camera)
         {
             Model = model;
-            _camera = camera;
             
-            Model.InitializeModel();
+            Model.InitializeModel(context, camera);
         }
 
-        public void InitSystem(GameSystemsHandler context)
-        {
-            var system = context.GetGameSystemByType(typeof(CannonSystem));
-            if (system is CannonSystem cannon)
-            {
-                _cannonSystem = cannon;
-            }
-            
-            Model.PlayerActions.Player.Attack.performed += OnAttackPerformed;
-            Model.PlayerActions.Player.RemoveAmmo.performed += OnRemovePerformed;
-        }
+        public void InitSystem(GameSystemsHandler context) { }
 
         public void UpdateSystem(float deltaTime, GameSystemsHandler context)
         {
-            if (_cannonSystem == null || _camera == null) return;
-
-            var mousePos = Mouse.current.position.ReadValue();
-            
-            var ray = _camera.ScreenPointToRay(mousePos);
-            
-            _cannonSystem.Aim(ray);
-        }
-
-        private void OnRemovePerformed(InputAction.CallbackContext ctx)
-        {
-            _cannonSystem.RemoveCurrentAmmo();
-        }
-
-        private void OnAttackPerformed(InputAction.CallbackContext ctx)
-        {
-            if (_cannonSystem == null || _camera == null) return;
-
-            var mousePos = Mouse.current.position.ReadValue();
-            
-            var ray = _camera.ScreenPointToRay(mousePos);
-            
-            _cannonSystem.TryFire(ray);
-        }
-        
-        public void DisposeInput()
-        {
-            Model.PlayerActions.Player.Attack.performed -= OnAttackPerformed;
-            Model.PlayerActions.Player.RemoveAmmo.performed -= OnRemovePerformed;
-            Model.DisposeInput();
+            Model.UpdateModel(deltaTime, context);
         }
     }
 }

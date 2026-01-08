@@ -111,7 +111,7 @@ ScriptedImporter:
     spriteBone:
     - name: BigClawRight_1
       guid: 7f9e7677920e7b14ea79d7f43eba2d53
-      position: {x: 66.318054, y: 179.61545, z: 0}
+      position: {x: 66.318054, y: 179.61539, z: 0}
       rotation: {x: 0, y: 0, z: -0.44092867, w: 0.89754224}
       length: 202.50352
       parentId: -1
@@ -485,7 +485,7 @@ ScriptedImporter:
       guid: 14d4946ae96765b479e731e98b64444e
       position: {x: 204.49951, y: 85.23657, z: 0}
       rotation: {x: 0, y: 0, z: -0.9903949, w: 0.13826792}
-      length: 159.27132
+      length: 159.2713
       parentId: -1
       color:
         serializedVersion: 2
@@ -844,7 +844,7 @@ ScriptedImporter:
     spriteBone:
     - name: BigClawLeft_1
       guid: ba02a71def717ba4c88eb4c9f5feee20
-      position: {x: 158.64258, y: 185.99896, z: 0}
+      position: {x: 158.64258, y: 185.9989, z: 0}
       rotation: {x: 0, y: 0, z: -0.90164024, w: 0.432487}
       length: 226.24585
       parentId: -1
@@ -1205,7 +1205,7 @@ ScriptedImporter:
     spriteBone:
     - name: BigClawLeft
       guid: 9565116b8fac3e64987d64d1499e81f0
-      position: {x: 11.918945, y: 81.71533, z: 0}
+      position: {x: 11.918945, y: 81.71521, z: 0}
       rotation: {x: 0, y: 0, z: -0.109116614, w: 0.99402905}
       length: 155.42474
       parentId: -1
@@ -1566,9 +1566,9 @@ ScriptedImporter:
     spriteBone:
     - name: SmallClawRight_1
       guid: 06b5fe7d437b40d479749e17aab745ec
-      position: {x: 33.445618, y: 76.62317, z: 0}
+      position: {x: 33.445618, y: 76.62311, z: 0}
       rotation: {x: 0, y: 0, z: -0.36413884, w: 0.93134475}
-      length: 95.44583
+      length: 95.445816
       parentId: -1
       color:
         serializedVersion: 2
@@ -1916,9 +1916,9 @@ ScriptedImporter:
     spriteBone:
     - name: SmallClawRight
       guid: f449092a95c3e4643b903bcb930b888c
-      position: {x: 86.85892, y: 87.35425, z: 0}
-      rotation: {x: 0, y: 0, z: -0.8815147, w: 0.4721566}
-      length: 90.976326
+      position: {x: 86.85892, y: 87.354126, z: 0}
+      rotation: {x: 0, y: 0, z: -0.8815147, w: 0.47215658}
+      length: 90.97634
       parentId: -1
       color:
         serializedVersion: 2
@@ -2256,8 +2256,8 @@ ScriptedImporter:
     - name: SmallClawLeft_1
       guid: 74cb80a593f640d42b16829771eaee31
       position: {x: 109.92029, y: 83.20068, z: 0}
-      rotation: {x: 0, y: 0, z: -0.94310427, w: 0.3324972}
-      length: 117.22817
+      rotation: {x: 0, y: 0, z: -0.94310427, w: 0.33249724}
+      length: 117.22819
       parentId: -1
       color:
         serializedVersion: 2
@@ -2606,8 +2606,8 @@ ScriptedImporter:
     - name: SmallClawLeft
       guid: 125d2191ec0a53744a6aa2483a7714ad
       position: {x: 36.230896, y: 83.420654, z: 0}
-      rotation: {x: 0, y: 0, z: -0.4755739, w: 0.8796758}
-      length: 77.94886
+      rotation: {x: 0, y: 0, z: -0.47557396, w: 0.87967575}
+      length: 77.94888
       parentId: -1
       color:
         serializedVersion: 2
@@ -2953,7 +2953,7 @@ ScriptedImporter:
         rgba: 4286643968
     - name: Tooth_2
       guid: 5014427bf14614c4c926174f448e0b49
-      position: {x: 291.92953, y: 23.44852, z: 0}
+      position: {x: 291.92953, y: 23.448523, z: 0}
       rotation: {x: 0, y: 0, z: -0.12624703, w: 0.99199885}
       length: 43.61864
       parentId: 4
@@ -2980,7 +2980,7 @@ ScriptedImporter:
         rgba: 4278190335
     - name: Head
       guid: eb997c15439506f4abedaed75745565c
-      position: {x: 365.75397, y: 369.57227, z: 0}
+      position: {x: 365.75397, y: 369.5722, z: 0}
       rotation: {x: 0, y: 0, z: -0.7140863, w: 0.7000577}
       length: 298.88474
       parentId: -1
@@ -4030,9 +4030,9 @@ ScriptedImporter:
     spriteBone:
     - name: MediumClawLeft
       guid: bc88be7426313774c8543dbc265b9833
-      position: {x: 94.863464, y: 48.120605, z: 0}
-      rotation: {x: 0, y: 0, z: -0.5305188, w: 0.8476732}
-      length: 133.7034
+      position: {x: 49.80237, y: 58.79248, z: 0}
+      rotation: {x: 0, y: 0, z: -0.37014437, w: 0.9289743}
+      length: 126.068474
       parentId: -1
       color:
         serializedVersion: 2
@@ -4380,9 +4380,9 @@ ScriptedImporter:
     spriteBone:
     - name: MediumClawLeft
       guid: bc88be7426313774c8543dbc265b9833
-      position: {x: 25.863464, y: 257.1206, z: 0}
-      rotation: {x: 0, y: 0, z: -0.5305188, w: 0.8476732}
-      length: 133.7034
+      position: {x: -19.197632, y: 267.79248, z: 0}
+      rotation: {x: 0, y: 0, z: -0.37014437, w: 0.9289743}
+      length: 126.068474
       parentId: -1
       color:
         serializedVersion: 2
@@ -5443,7 +5443,7 @@ ScriptedImporter:
       guid: 8c7879bc7358a8141af3f5e629a8e01c
       position: {x: 281.93988, y: 440.15173, z: 0}
       rotation: {x: 0, y: 0, z: -0.70876485, w: 0.7054448}
-      length: 252.58217
+      length: 252.58223
       parentId: -1
       color:
         serializedVersion: 2
@@ -7379,14 +7379,14 @@ ScriptedImporter:
       guid: 8c7879bc7358a8141af3f5e629a8e01c
       position: {x: 519.9399, y: 816.15173, z: 0}
       rotation: {x: 0, y: 0, z: -0.70876485, w: 0.7054448}
-      length: 252.58218
+      length: 252.58224
       parentId: -1
       color:
         serializedVersion: 2
         rgba: 4278190335
     - name: Head
       guid: eb997c15439506f4abedaed75745565c
-      position: {x: 252.58226, y: 0.00003325667, z: 0}
+      position: {x: 252.58232, y: 0.00003354324, z: 0}
       rotation: {x: 0, y: 0, z: -0.007572191, w: 0.99997133}
       length: 298.8848
       parentId: 0
@@ -7432,16 +7432,16 @@ ScriptedImporter:
     - name: SmallClawRight
       guid: f449092a95c3e4643b903bcb930b888c
       position: {x: 289.08377, y: -91.17802, z: 0}
-      rotation: {x: 0, y: 0, z: -0.27995056, w: 0.96001446}
-      length: 90.976326
+      rotation: {x: 0, y: 0, z: -0.2799506, w: 0.9600144}
+      length: 90.97635
       parentId: 1
       color:
         serializedVersion: 2
         rgba: 4278223103
     - name: SmallClawRight_1
       guid: 06b5fe7d437b40d479749e17aab745ec
-      position: {x: 90.97635, y: 0.0000028614777, z: 0}
-      rotation: {x: 0, y: 0, z: 0.64906347, w: 0.76073426}
+      position: {x: 90.97634, y: 0.0000044763074, z: 0}
+      rotation: {x: 0, y: 0, z: 0.6490635, w: 0.76073426}
       length: 95.44582
       parentId: 6
       color:
@@ -7450,16 +7450,16 @@ ScriptedImporter:
     - name: SmallClawLeft
       guid: 125d2191ec0a53744a6aa2483a7714ad
       position: {x: 289.2002, y: 101.234116, z: 0}
-      rotation: {x: 0, y: 0, z: 0.29523528, w: 0.9554246}
-      length: 77.94886
+      rotation: {x: 0, y: 0, z: 0.2952352, w: 0.9554246}
+      length: 77.948875
       parentId: 1
       color:
         serializedVersion: 2
         rgba: 4286643968
     - name: SmallClawLeft_1
       guid: 74cb80a593f640d42b16829771eaee31
-      position: {x: 77.94886, y: -0.00002215584, z: 0}
-      rotation: {x: 0, y: 0, z: -0.671499, w: 0.7410055}
+      position: {x: 77.948875, y: -0.000013148734, z: 0}
+      rotation: {x: 0, y: 0, z: -0.67149895, w: 0.7410056}
       length: 117.22817
       parentId: 8
       color:
@@ -7476,7 +7476,7 @@ ScriptedImporter:
         rgba: 4294901888
     - name: BigClawLeft_1
       guid: ba02a71def717ba4c88eb4c9f5feee20
-      position: {x: 155.42474, y: -0.000039908417, z: 0}
+      position: {x: 155.42474, y: -0.000038454993, z: 0}
       rotation: {x: 0, y: 0, z: -0.84906495, w: 0.5282885}
       length: 226.2459
       parentId: 10
@@ -7485,9 +7485,9 @@ ScriptedImporter:
         rgba: 4286578943
     - name: MediumClawLeft
       guid: bc88be7426313774c8543dbc265b9833
-      position: {x: 155.77158, y: 338.26633, z: 0}
-      rotation: {x: 0, y: 0, z: 0.23391807, w: 0.9722563}
-      length: 133.7034
+      position: {x: 145.99577, y: 293.00238, z: 0}
+      rotation: {x: 0, y: 0, z: 0.40424538, w: 0.91465056}
+      length: 126.06849
       parentId: 1
       color:
         serializedVersion: 2
@@ -7505,14 +7505,14 @@ ScriptedImporter:
       guid: 14d4946ae96765b479e731e98b64444e
       position: {x: 256.6237, y: -163.19559, z: 0}
       rotation: {x: 0, y: 0, z: -0.59459835, w: 0.80402297}
-      length: 159.27132
+      length: 159.2713
       parentId: 1
       color:
         serializedVersion: 2
         rgba: 4294967040
     - name: BigClawRight_1
       guid: 7f9e7677920e7b14ea79d7f43eba2d53
-      position: {x: 159.2713, y: 0.00002420917, z: 0}
+      position: {x: 159.2713, y: 0.000026054495, z: 0}
       rotation: {x: 0, y: 0, z: 0.8279549, w: 0.5607948}
       length: 202.50351
       parentId: 14

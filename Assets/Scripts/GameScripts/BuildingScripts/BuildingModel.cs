@@ -1,4 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using GameScripts.BugsScripts;
+using Unity.VisualScripting;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace GameScripts.BuildingScripts
 {
@@ -6,38 +12,132 @@ namespace GameScripts.BuildingScripts
     {
         public BuildingSystem System;
         public BuildingView View;
+        public List<FloorData> CurrentFloors;
+        public bool IsRuined => CurrentFloors.Count == 0;
+
+        private GameSystemsHandler _context;
+        private BugSpawnSystem _bugSpawnSystem;
+
+        private int _visualDestructionQueue = 0;
+        private bool _isHit;
+        private RaycastHit _hitData;
+        private string _pendingBugAddress;
+        private BuildingColors _pendingBugColor;
+
+        private bool _needRemoveTopFloor;
         
-        public BuildingData Data;
+        private float _destructionTimer = 0f;
+        private float _destructionInterval = 0.15f;
 
-        private int _buildingHitPoints;
+        public void SetBuildingHitted(RaycastHit hit, string bugAddress, BuildingColors bugColor)
+        {
+            _isHit = true;
+            _hitData = hit;
+            _pendingBugAddress = bugAddress;
+            _pendingBugColor = bugColor;
+        }
 
-        public void InitializeBuilding(BuildingSystem system, BuildingView view)
+        public void InitializeBuilding(BuildingSystem system, BuildingView view, BuildingData data)
         {
             System = system;
             View = view;
-            _buildingHitPoints = View.Floors.Count-1;
+            
+            CurrentFloors = data.FloorsData;
         }
 
+        public void SetContext(GameSystemsHandler context)
+        {
+            _context = context;
+            _bugSpawnSystem = _context.GetGameSystemByType(typeof(BugSpawnSystem)) as BugSpawnSystem;
+
+        }
+        
         public void UpdateModel(float deltaTime, GameSystemsHandler context)
         {
-            if (!context.IsBugSpawned) return;
-            if (context.CurrentBug.TargetBuilding.View != View) return;
-            if (Data.FloorsData[_buildingHitPoints].FloorColor != context.CurrentBug.BugColor)
+            if (_isHit)
             {
-                context.CurrentBug.DestroyBug();
-                View.Floors[_buildingHitPoints].FloorAnimation.Play(View.Floors[_buildingHitPoints].FloorHitClip.name);
-                View.Floors[_buildingHitPoints].HitParticles.Play();
-                return;
+                ProcessHit();
+                _isHit = false;
             }
-            context.CurrentBug.BugAnimationPlay();
-            View.Floors[_buildingHitPoints].FloorAnimation.Play(View.Floors[_buildingHitPoints].FloodDestroyClip.name);
-            View.Floors[_buildingHitPoints].DestroyParticles.Play();
-            _buildingHitPoints --;
+            
+            if (_visualDestructionQueue > 0)
+            {
+                _destructionTimer += deltaTime;
+
+                if (_destructionTimer >= _destructionInterval)
+                {
+                    _destructionTimer = 0f;
+                    ExecuteVisualDestruction();
+                    _visualDestructionQueue--;
+                }
+            }
+            else if (IsRuined && View.Floors.Count == 0) 
+            {
+                ConvertToRuins();
+            }
         }
 
-        public Transform GetCurrentFloorTransform()
+        private void ProcessHit()
         {
-            return View.Floors[_buildingHitPoints].FloorTransform;
+            
+            _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, _hitData.point, this, _pendingBugColor);
+            
+            if (View.HitParticles != null) 
+            {
+                View.HitParticles.transform.position = _hitData.point;
+                View.HitParticles.Play();
+            }
+        }
+
+        public void RemoveFloorData()
+        {
+            if (CurrentFloors.Count > 0)
+            {
+                CurrentFloors.RemoveAt(CurrentFloors.Count - 1);
+            }
+        }
+        
+        public void EnqueueVisualDestruction(int count)
+        {
+            _visualDestructionQueue += count;
+            _destructionTimer = _destructionInterval; 
+        }
+
+        private void ExecuteVisualDestruction()
+        {
+            if (View.Floors.Count > 0)
+            {
+                var lastIndex = View.Floors.Count - 1;
+                var floorView = View.Floors[lastIndex];
+
+                if (floorView.DestroyParticles != null)
+                {
+                    floorView.DestroyParticles.transform.SetParent(null);
+                    floorView.DestroyParticles.Play();
+                    Object.Destroy(floorView.DestroyParticles.gameObject, 2f);
+                }
+            
+                View.Floors.RemoveAt(lastIndex);
+                Object.Destroy(floorView.gameObject);
+            }
+            else if (View.DestroyParticles != null)
+            {
+                View.DestroyParticles.Play();
+            }
+        }
+        
+        private void ConvertToRuins()
+        {
+            // View.SetRuinsSprite(); 
+
+            _context.AddSystemToDelete(System);
+            Object.Destroy(View.gameObject);
+        }
+        
+        public BuildingColors GetTopFloorColor()
+        {
+            if (IsRuined) return default;
+            return CurrentFloors.Last().FloorColor;
         }
     }
 }

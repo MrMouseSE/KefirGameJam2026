@@ -1,0 +1,75 @@
+{
+    "version": 1,
+    "name": "PlayerActionsMap",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "251a920d-6f1f-47ff-96d4-38649abc6e4f",
+            "actions": [
+                {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "0146b3d1-24b6-4cc0-a622-60312995120d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "2e066835-9860-4a55-807d-93a633434e4a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RemoveAmmo",
+                    "type": "Button",
+                    "id": "82d15209-2354-48f0-99c1-879632025fcb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "996b5fdb-6a60-4736-867a-6da5a1f5a1be",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c7bfbabe-1a2e-4ebe-b495-5daec6c598cc",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e7583d1-67b6-40f2-a7b6-9c87693cd463",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RemoveAmmo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

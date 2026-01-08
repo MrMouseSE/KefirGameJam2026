@@ -19,3 +19,11 @@ MonoBehaviour:
     FloorHeight: 0.5
     BuildingColors: 00000000
     FloorSprite: {fileID: 21300000, guid: b1d528ed215d749479c27421046b95f6, type: 3}
+  - FloorPrefab: {fileID: 9077172280243770836, guid: b584560d7e646ec40afc533b3b70f5f2, type: 3}
+    FloorHeight: 0.5
+    BuildingColors: 01000000
+    FloorSprite: {fileID: 21300000, guid: b1d528ed215d749479c27421046b95f6, type: 3}
+  - FloorPrefab: {fileID: 9077172280243770836, guid: b584560d7e646ec40afc533b3b70f5f2, type: 3}
+    FloorHeight: 0.5
+    BuildingColors: 01000000
+    FloorSprite: {fileID: 21300000, guid: b1d528ed215d749479c27421046b95f6, type: 3}

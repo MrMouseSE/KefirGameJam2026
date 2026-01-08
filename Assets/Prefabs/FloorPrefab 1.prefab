@@ -145,7 +145,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 65ff0e6340fb7ad4787c9bec9a25beaf, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 6767567669759103745}
   - component: {fileID: 9077172280243770836}
   m_Layer: 0
-  m_Name: FloorPrefab
+  m_Name: FloorPrefab 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,29 +1,27 @@
+using GameScripts.BuildingScripts;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace GameScripts.BugsScripts
 {
-    public class BugSystem : IGameSystem
+    public class BugSpawnSystem : IGameSystem
     {
-        public BugModel Model;
-        public BugView View;
-        
-        private GameSystemsHandler _context;
-        
-        public BugSystem(BugModel model, BugView view)
+        public BugSpawnModel Model;
+
+        public BugSpawnSystem(BugSpawnModel model)
         {
             Model = model;
-            View = view;
-        }
-
-        public void InitSystem(GameSystemsHandler context)
-        {
-            _context = context;
         }
         
+        public void InitSystem(GameSystemsHandler context)
+        {
+            Model.Initialize(context);
+        }
+
         public void UpdateSystem(float deltaTime, GameSystemsHandler context)
         {
-            Model.UpdateModel(deltaTime);
+            
         }
     }
 }

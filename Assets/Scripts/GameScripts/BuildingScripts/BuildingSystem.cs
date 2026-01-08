@@ -14,7 +14,6 @@ namespace GameScripts.BuildingScripts
         
         public void InitSystem(GameSystemsHandler context)
         {
-            throw new System.NotImplementedException();
         }
 
         public void UpdateSystem(float deltaTime, GameSystemsHandler context)

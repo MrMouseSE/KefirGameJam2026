@@ -33,11 +33,22 @@ namespace GameScripts.BuildingScripts
             View.Floors[_buildingHitPoints].FloorAnimation.Play(View.Floors[_buildingHitPoints].FloodDestroyClip.name);
             View.Floors[_buildingHitPoints].DestroyParticles.Play();
             _buildingHitPoints --;
+            if (_buildingHitPoints < 0)
+            {
+                context.AddSystemToDelete(System);
+                View.Floors[0].OnAnimationFinished += DestroyView;
+            }
         }
 
         public Transform GetCurrentFloorTransform()
         {
             return View.Floors[_buildingHitPoints].FloorTransform;
+        }
+
+        private void DestroyView()
+        {
+            View.Floors[0].OnAnimationFinished -= DestroyView;
+            Object.Destroy(View.BuildingPrefab);
         }
     }
 }

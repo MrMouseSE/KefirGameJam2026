@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3501348170982550594}
   - component: {fileID: 8783650818766280319}
   m_Layer: 0
-  m_Name: Bug
+  m_Name: BugTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

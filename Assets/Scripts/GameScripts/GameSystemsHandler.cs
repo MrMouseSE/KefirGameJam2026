@@ -10,6 +10,7 @@ using GameScripts.CannonScripts;
 using GameScripts.ChangeLevelScript;
 using GameScripts.Descriptions;
 using GameScripts.InputPlayerSystemScript;
+using GameScripts.ScoreCounterScripts;
 using UnityEngine;
 
 namespace GameScripts
@@ -18,10 +19,10 @@ namespace GameScripts
     {
         public LevelsDescriptionsHolder LevelsDescriptionsHolder;
         public BuildingsPlacerView PlacerView;
-        public CannonView CannonView;
-        public BugSpawnSystem BugSpawnSystem;
-
-        [Space] public ChangeLevelHandler ChangeLevelHandler;
+        public ScoreCounterView ScoreCounterView;
+        
+        [Space]
+        public ChangeLevelHandler ChangeLevelHandler;
 
         [HideInInspector] public LevelDescription CurrentLevelDescription { get; private set; }
 
@@ -44,6 +45,7 @@ namespace GameScripts
 
         public void InitGameSystems()
         {
+            CurrentDestroyedBuildings = new DestroyedBuildings();
             _currentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
             CurrentLevelDescription = LevelsDescriptionsHolder.LevelDescription.Find(x => x.Level == _currentLevel);
             BuildingStaticFactory.SetLevelDescription(CurrentLevelDescription);
@@ -113,6 +115,16 @@ namespace GameScripts
             foreach (var gameSystem in _gameSystems)
             {
                 gameSystem.UpdateSystem(Time.deltaTime, this);
+            }
+        }
+
+        private void RemoveBuilding()
+        {
+            BuildingsPlacerSystem placerSystem =
+                (BuildingsPlacerSystem)GetGameSystemByType(typeof(BuildingsPlacerSystem));
+            foreach (var gameSystem in _systemsToRemove.Where(gameSystem => gameSystem.GetType() == typeof(BuildingSystem)))
+            {
+                placerSystem.Model.RemoveBuilding((BuildingSystem)gameSystem);
             }
         }
 

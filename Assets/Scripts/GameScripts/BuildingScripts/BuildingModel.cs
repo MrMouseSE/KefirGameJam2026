@@ -36,6 +36,7 @@ namespace GameScripts.BuildingScripts
             if (_buildingHitPoints < 0)
             {
                 context.AddSystemToDelete(System);
+                context.CurrentDestroyedBuildings.DestroyedBuildingsValues.Add(1);
                 View.Floors[0].OnAnimationFinished += DestroyView;
             }
         }

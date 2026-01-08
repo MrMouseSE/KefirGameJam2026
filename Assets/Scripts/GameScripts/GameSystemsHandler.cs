@@ -9,6 +9,7 @@ using GameScripts.BuildingsSpawnerSystemScripts;
 using GameScripts.ChangeLevelScript;
 using GameScripts.Descriptions;
 using GameScripts.InputPlayerSystemScript;
+using GameScripts.ScoreCounterScripts;
 using UnityEngine;
 
 namespace GameScripts
@@ -17,6 +18,7 @@ namespace GameScripts
     {
         public LevelsDescriptionsHolder LevelsDescriptionsHolder;
         public BuildingsPlacerView PlacerView;
+        public ScoreCounterView ScoreCounterView;
         
         [Space]
         public ChangeLevelHandler ChangeLevelHandler;
@@ -25,6 +27,8 @@ namespace GameScripts
         public bool IsBugSpawned;
         [HideInInspector]
         public BugModel CurrentBug;
+        [HideInInspector]
+        public DestroyedBuildings CurrentDestroyedBuildings;
         
         private int _currentLevel = 0;
         private List<IGameSystem> _gameSystems;
@@ -44,6 +48,7 @@ namespace GameScripts
 
         public void InitGameSystems()
         {
+            CurrentDestroyedBuildings = new DestroyedBuildings();
             _currentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
             var currentLevelDescription = LevelsDescriptionsHolder.LevelDescription.Find(x => x.Level == _currentLevel);
             BuildingStaticFactory.SetLevelDescription(currentLevelDescription);
@@ -51,6 +56,7 @@ namespace GameScripts
             _gameSystems.Add(new BuildingsSpawnerSystem(new BuildingsSpawnerModel(), currentLevelDescription));
             _gameSystems.Add(new BuildingsPlacerSystem(new BuildingsPlacerModel(), PlacerView, currentLevelDescription));
             _gameSystems.Add(new InputPlayerSystem(new InputPlayerModel()));
+            _gameSystems.Add(new ScoreCounterSystem(new ScoreCounterModel(), ScoreCounterView));
             _isGameRunnign = true;
         }
         

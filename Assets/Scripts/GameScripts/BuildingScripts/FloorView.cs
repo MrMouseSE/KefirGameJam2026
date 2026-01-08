@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace GameScripts.BuildingScripts
@@ -12,5 +13,12 @@ namespace GameScripts.BuildingScripts
         public AnimationClip FloorHitClip;
         public ParticleSystem HitParticles;
         public ParticleSystem DestroyParticles;
+        
+        public Action OnAnimationFinished;
+
+        public void AnimationFinished()
+        {
+            OnAnimationFinished?.Invoke();
+        }
     }
 }

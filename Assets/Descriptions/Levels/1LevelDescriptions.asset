@@ -20,10 +20,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9cfc3723ecf07c44bb6dc1c037ca3d3a, type: 2}
   SpriteColorByBuildingColor:
   - BuildingColor: 0
-    SpriteColorValue: {r: 0.823, g: 0.22220999, b: 0.22220999, a: 1}
+    SpriteColorValue: {fileID: 2800000, guid: 464ea04e577204a419b0af768673fba4, type: 3}
   - BuildingColor: 1
-    SpriteColorValue: {r: 0.17221434, g: 0.3688684, b: 0.8113208, a: 1}
+    SpriteColorValue: {fileID: 2800000, guid: 62061d609921b2e44aaeee664a911e33, type: 3}
   - BuildingColor: 2
-    SpriteColorValue: {r: 0.14301194, g: 0.5943396, b: 0.13737096, a: 1}
+    SpriteColorValue: {fileID: 2800000, guid: 690698dd04cdd9f46b298746408e11cf, type: 3}
   - BuildingColor: 3
-    SpriteColorValue: {r: 0.7830189, g: 0.7024806, b: 0.13665895, a: 1}
+    SpriteColorValue: {fileID: 2800000, guid: 007509c70f6c1c64bb8a9412f54d3c47, type: 3}

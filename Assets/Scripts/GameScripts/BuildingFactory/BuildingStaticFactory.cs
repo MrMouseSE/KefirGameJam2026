@@ -8,6 +8,7 @@ namespace GameScripts.BuildingFactory
     public static class BuildingStaticFactory
     {
         private static LevelDescription _levelDescription;
+        private static readonly int TintGradientID = Shader.PropertyToID("_TintGradient");
 
         public static void SetLevelDescription(LevelDescription levelDescription)
         {
@@ -30,8 +31,7 @@ namespace GameScripts.BuildingFactory
                 FloorData floorData = new FloorData();
                 floorData.FloorColor = level.BuildingSpriteColorPairs[i].BuildingColors[Random.Range(0,level.BuildingSpriteColorPairs[i].BuildingColors.Count)];
                 floorView.FloorRenderer.sprite = level.BuildingSpriteColorPairs[i].FloorSprite;
-                floorView.FloorRenderer.color = _levelDescription.SpriteColorByBuildingColor.Find
-                    (x => x.BuildingColor == floorData.FloorColor).SpriteColorValue;
+                floorView.FloorRenderer.material.SetTexture(TintGradientID, _levelDescription.SpriteColorByBuildingColor.Find(x => x.BuildingColor == floorData.FloorColor).SpriteColorValue);
                 buildingData.FloorsData.Add(floorData);
             }
             BuildingModel buildingModel = new BuildingModel();

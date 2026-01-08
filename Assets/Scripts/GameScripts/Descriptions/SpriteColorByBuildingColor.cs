@@ -8,6 +8,6 @@ namespace GameScripts.Descriptions
     public class SpriteColorByBuildingColor
     {
         public BuildingColors BuildingColor;
-        public Color SpriteColorValue;
+        public Texture2D SpriteColorValue;
     }
 }

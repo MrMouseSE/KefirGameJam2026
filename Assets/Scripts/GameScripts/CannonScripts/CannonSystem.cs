@@ -49,7 +49,7 @@ namespace GameScripts.CannonScripts
             var buildingView = hit.collider.GetComponentInParent<BuildingView>();
             if (buildingView == null) return;
 
-            View.PlayFireEffects();
+            // View.PlayFireEffects();
             
             var ammoData = Model.GetNextAmmo();
             

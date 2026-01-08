@@ -50,8 +50,6 @@ namespace GameScripts.BuildingScripts
 
         public void PlayDestroyEffects()
         {
-            if (DestroyParticles == null) return;
-            
             DestroyParticles.Play();
 
             // Destroy(DestroyParticles.gameObject, DestroyParticles.main.duration);

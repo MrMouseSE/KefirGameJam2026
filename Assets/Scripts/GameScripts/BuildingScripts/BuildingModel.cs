@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameScripts.BugsScripts;
 
 namespace GameScripts.BuildingScripts
 {
@@ -18,10 +19,12 @@ namespace GameScripts.BuildingScripts
 
         public void UpdateModel(float deltaTime, GameSystemsHandler context)
         {
-            if (!context.IsBugSpawned) return;
-            if (context.CurrentBug != null && context.CurrentBug.TargetBuilding != null)
+            var system = context.GetGameSystemByType(typeof(BugSpawnSystem)) as BugSpawnSystem;
+            
+            if (!system.Model.IsBugSpawned) return;
+            if (system.Model.CurrentBug != null && system.Model.CurrentBug.TargetBuilding != null)
             {
-                if (context.CurrentBug.TargetBuilding.View != View) return;
+                if (system.Model.CurrentBug.TargetBuilding.View != View) return;
             }
         }
     }

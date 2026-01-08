@@ -11,16 +11,11 @@ namespace GameScripts.CannonScripts
         
         public void PlayFireEffects()
         {
-            if (ShootParticles != null)
-            {
-                ShootParticles.Play();
-            }
+            ShootParticles.Play();
         }
 
         public void RotateCannon(Vector3 lookTarget)
         {
-            if (CannonRoot == null) return;
-            
             CannonRoot.LookAt(lookTarget);
         }
     }

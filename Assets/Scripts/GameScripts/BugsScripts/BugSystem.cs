@@ -44,7 +44,7 @@ namespace GameScripts.BugsScripts
             {
                 var topFloorColor = targetBuilding.System.GetTopFloorColor();
 
-                if (topFloorColor == Model.BuildingColor)
+                if (topFloorColor == Model.BugColor)
                 {
                     targetBuilding.System.RemoveTopFloor();
                 }
@@ -64,10 +64,12 @@ namespace GameScripts.BugsScripts
             
             Model.IsDead = true;
             _context.AddSystemToDelete(this);
+
+            var system = _context.GetGameSystemByType(typeof(BugSpawnSystem)) as BugSpawnSystem;
             
-            if (_context.CurrentBug == this.Model) 
+            if (system.Model.CurrentBug == this.Model) 
             {
-                _context.OnBugDied();
+                system.Model.OnBugDied();
             }
 
             if (View == null) return;

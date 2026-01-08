@@ -1,10 +1,12 @@
 using System.Linq;
+using GameScripts.BugsScripts;
 using UnityEngine;
 
 namespace GameScripts.BuildingScripts
 {
     public class BuildingSystem : IGameSystem
     {
+       
         public BuildingModel Model;
         public BuildingView View;
         private GameSystemsHandler _context;
@@ -34,7 +36,8 @@ namespace GameScripts.BuildingScripts
 
         private void OnHit(RaycastHit hit, string bugAddress, BuildingColors bugColor)
         {
-            _context.CreateAndRegisterBug(bugAddress, hit.point, this.Model, bugColor);
+            var spawner = _context.GetGameSystemByType(typeof(BugSpawnSystem)) as BugSpawnSystem;
+            spawner.Model.CreateAndRegisterBug(bugAddress, hit.point, this.Model, bugColor);
         }
         
         public bool HasFloors => Model != null && Model.CurrentFloors != null && Model.CurrentFloors.Count > 0;

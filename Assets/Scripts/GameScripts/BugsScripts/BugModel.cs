@@ -5,7 +5,7 @@ namespace GameScripts.BugsScripts
 {
     public class BugModel
     {
-        public BuildingColors BuildingColor;
+        public BuildingColors BugColor;
         
         public BugSystem System;
         public BugView View;
@@ -25,5 +25,6 @@ namespace GameScripts.BugsScripts
             TargetBuilding = target;
             IsDead = false;
         }
+
     }
 }

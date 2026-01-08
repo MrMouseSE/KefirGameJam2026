@@ -16,14 +16,17 @@ MonoBehaviour:
   BuildingPrefab: {fileID: 6133816667179342604, guid: ccc4f8ad18b26b642b2849f71dfac159, type: 3}
   BuildingSpriteColorPairs:
   - FloorPrefab: {fileID: 9077172280243770836, guid: e8289d36711b922498dffd470e9b1cd2, type: 3}
-    FloorHeight: 0.5
+    FloorHeight: 0
     BuildingColors: 000000000100000003000000
-    FloorSprite: {fileID: 0}
+    FloorSprite: {fileID: 1609141831, guid: fe791912bb5b721469430fa4814ad1c2, type: 3}
+    FloorDestructionSprite: {fileID: 791841890, guid: fe791912bb5b721469430fa4814ad1c2, type: 3}
   - FloorPrefab: {fileID: 9077172280243770836, guid: e8289d36711b922498dffd470e9b1cd2, type: 3}
-    FloorHeight: 0.5
+    FloorHeight: 0
     BuildingColors: 000000000100000003000000
-    FloorSprite: {fileID: 0}
+    FloorSprite: {fileID: 673780666, guid: fe791912bb5b721469430fa4814ad1c2, type: 3}
+    FloorDestructionSprite: {fileID: 6287072, guid: fe791912bb5b721469430fa4814ad1c2, type: 3}
   - FloorPrefab: {fileID: 9077172280243770836, guid: e8289d36711b922498dffd470e9b1cd2, type: 3}
-    FloorHeight: 0.5
+    FloorHeight: 0
     BuildingColors: 000000000100000003000000
-    FloorSprite: {fileID: 0}
+    FloorSprite: {fileID: -1479255666, guid: fe791912bb5b721469430fa4814ad1c2, type: 3}
+    FloorDestructionSprite: {fileID: 508645076, guid: fe791912bb5b721469430fa4814ad1c2, type: 3}

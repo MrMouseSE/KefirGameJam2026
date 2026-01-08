@@ -12,5 +12,6 @@ namespace GameScripts.Descriptions
         public float FloorHeight;
         public List<BuildingColors> BuildingColors;
         public Sprite FloorSprite;
+        public Sprite FloorDestructionSprite;
     }
 }

@@ -8,7 +8,6 @@ namespace GameScripts.InputPlayerSystemScript
         public PlayerActionsMap PlayerActions;
         
         private Camera _camera;
-        private GameSystemsHandler _context;
         private bool _onAttackButtonPressed;
         private bool _onReloadButtonPressed;
         private Vector2 _currentMousePosition;
@@ -23,7 +22,6 @@ namespace GameScripts.InputPlayerSystemScript
         public void InitializeModel(GameSystemsHandler context, Camera camera)
         {
             _camera = camera;
-            _context = context;
             
             PlayerActions = new PlayerActionsMap();
             EnableInput();

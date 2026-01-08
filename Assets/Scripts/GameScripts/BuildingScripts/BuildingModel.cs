@@ -16,6 +16,7 @@ namespace GameScripts.BuildingScripts
         public bool IsRuined => CurrentFloors.Count == 0;
 
         private GameSystemsHandler _context;
+        private BugSpawnSystem _bugSpawnSystem;
 
         private int _visualDestructionQueue = 0;
         private bool _isHit;
@@ -47,6 +48,8 @@ namespace GameScripts.BuildingScripts
         public void SetContext(GameSystemsHandler context)
         {
             _context = context;
+            _bugSpawnSystem = _context.GetGameSystemByType(typeof(BugSpawnSystem)) as BugSpawnSystem;
+
         }
         
         public void UpdateModel(float deltaTime, GameSystemsHandler context)
@@ -76,9 +79,8 @@ namespace GameScripts.BuildingScripts
 
         private void ProcessHit()
         {
-            var bugSpawner = _context.GetGameSystemByType(typeof(BugSpawnSystem)) as BugSpawnSystem;
             
-            bugSpawner.Model.CreateBug(_pendingBugAddress, _hitData.point, this, _pendingBugColor);
+            _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, _hitData.point, this, _pendingBugColor);
             
             if (View.HitParticles != null) 
             {

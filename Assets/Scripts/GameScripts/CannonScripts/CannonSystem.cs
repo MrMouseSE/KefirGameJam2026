@@ -1,16 +1,15 @@
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+using GameScripts.BuildingScripts;
 
-namespace GameScripts.BugsScripts
+namespace GameScripts.CannonScripts
 {
-    public class BugSystem : IGameSystem
+    public class CannonSystem : IGameSystem
     {
-        public BugModel Model;
-        public BugView View;
-        
+        public CannonModel Model;
+        public CannonView View;
         private GameSystemsHandler _context;
         
-        public BugSystem(BugModel model, BugView view)
+        public CannonSystem(CannonModel model, CannonView view)
         {
             Model = model;
             View = view;
@@ -19,11 +18,12 @@ namespace GameScripts.BugsScripts
         public void InitSystem(GameSystemsHandler context)
         {
             _context = context;
+            Model.Initialize(context, View);
         }
-        
+
         public void UpdateSystem(float deltaTime, GameSystemsHandler context)
         {
-            Model.UpdateModel(deltaTime);
+            Model.UpdateModel(deltaTime, context);
         }
     }
 }

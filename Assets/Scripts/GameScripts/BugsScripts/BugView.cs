@@ -1,3 +1,5 @@
+using System;
+using GameScripts.BuildingScripts;
 using UnityEngine;
 
 namespace GameScripts.BugsScripts
@@ -10,17 +12,13 @@ namespace GameScripts.BugsScripts
         public string DestroyTrigger;
         public ParticleSystem HitParticles;
         public ParticleSystem DestroyParticles;
+        public ParticleSystem DeathSplatterParticles;
+        [HideInInspector] public BuildingColors BugColor;
+        public bool IsAttackAnimationFinished;
 
-        private int _destroyTrigger;
-
-        private void Awake()
+        public void OnAnimationFinishTrigger()
         {
-            _destroyTrigger = Animator.StringToHash(DestroyTrigger);
-        }
-
-        public void DestroyView()
-        {
-            BugAnimator.SetTrigger(_destroyTrigger);
+            IsAttackAnimationFinished = true;
         }
     }
 }

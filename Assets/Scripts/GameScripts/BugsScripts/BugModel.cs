@@ -1,5 +1,9 @@
 using System;
+using System.Linq;
 using GameScripts.BuildingScripts;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
+using Object = UnityEngine.Object;
 
 namespace GameScripts.BugsScripts
 {
@@ -16,31 +20,99 @@ namespace GameScripts.BugsScripts
 
         private float _bugLiveTime;
 
-        public void UpdateModel(float deltaTime, GameSystemsHandler context)
+        private GameSystemsHandler _context;
+        private bool _isDead;
+        
+        //DEBUG
+        private float _timer;
+        private float _delay = 1.2f;
+
+        public void Initialize(BugSystem system, BugView view, BuildingModel target, BuildingColors color, GameSystemsHandler context)
         {
-            _bugLiveTime -= deltaTime;
-            if (_bugLiveTime > 0f) return;
+            System = system;
+            View = view;
+            TargetBuilding = target;
+            BugColor = color;
+            _context = context;
+
+            _timer = 0;
+            
+            ApplyColor();
         }
 
-        public void BugAnimationPlay()
+        public void UpdateModel(float deltaTime)
         {
-            //TODO: bug eating animation
+            if (_isDead) return;
+
+            _timer += deltaTime;
+            
+            // if (View.IsAttackAnimationFinished)
+            // {
+                // EatFloors();
+                // View.IsAttackAnimationFinished = false;
+            // }
+            
+            //DEBUG
+            if (_timer >= _delay)
+            {
+                EatFloors();
+            }
         }
 
-        public void DestroyBug()
+        private void ApplyColor() { }
+
+        private void EatFloors()
         {
-            OnBugDestroyed?.Invoke();
-            OnDestroy();
+            if (TargetBuilding == null || TargetBuilding.IsRuined)
+            {
+                Die(false);
+                return;
+            }
+            
+            var floorsEatenCount = 0;
+
+            while (!TargetBuilding.IsRuined)
+            {
+                var topColor = TargetBuilding.GetTopFloorColor();
+
+                if (topColor == BugColor)
+                {
+                    TargetBuilding.RemoveFloorData(); 
+                    floorsEatenCount++;
+                }
+                else
+                {
+                    Die(true);
+                    break; 
+                }
+            }
+
+            if (floorsEatenCount > 0)
+            {
+                TargetBuilding.EnqueueVisualDestruction(floorsEatenCount);
+            }
+    
+            if (!_isDead) Die(false);
         }
 
-        private void OnDestroy()
+        private void Die(bool exploded)
         {
-            View.DestroyView();
+            _isDead = true;
+            
+            if (exploded && View.DeathSplatterParticles != null)
+            {
+                View.DeathSplatterParticles.transform.SetParent(null);
+                View.DeathSplatterParticles.Play();
+                Object.Destroy(View.DeathSplatterParticles.gameObject, 2f);
+            }
+            
+            var spawner = _context.GetGameSystemByType(typeof(BugSpawnSystem)) as BugSpawnSystem;
+            spawner.Model.NotifyBugDied(this);
+
+            _context.AddSystemToDelete(System);
+            
+            Addressables.ReleaseInstance(View.gameObject);
         }
 
-        private void SetBugOnBuilding()
-        {
-            View.BugTransform.position = TargetBuilding.GetCurrentFloorTransform().position;
-        }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using GameScripts.BugsScripts;
 using UnityEngine;
 
 namespace GameScripts.Descriptions

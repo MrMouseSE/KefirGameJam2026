@@ -20,11 +20,16 @@ namespace GameScripts
         public LevelsDescriptionsHolder LevelsDescriptionsHolder;
         public BuildingsPlacerView PlacerView;
         public ScoreCounterView ScoreCounterView;
+        public CannonView CannonView;
         
         [Space]
         public ChangeLevelHandler ChangeLevelHandler;
 
-        [HideInInspector] public LevelDescription CurrentLevelDescription { get; private set; }
+        [HideInInspector]
+        public LevelDescription CurrentLevelDescription { get; private set; }
+
+        [HideInInspector]
+        public DestroyedBuildings CurrentDestroyedBuildings;
 
         private int _currentLevel = 0;
         private List<IGameSystem> _gameSystems;

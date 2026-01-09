@@ -53,7 +53,6 @@ namespace GameScripts
         {
             CurrentDestroyedBuildings = new DestroyedBuildings();
             _currentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
-            Debug.LogError(_currentLevel);
             CurrentLevelDescription = LevelsDescriptionsHolder.LevelDescription.Find(x => x.Level == _currentLevel);
             BuildingStaticFactory.SetLevelDescription(CurrentLevelDescription);
             _gameSystems = new List<IGameSystem>();

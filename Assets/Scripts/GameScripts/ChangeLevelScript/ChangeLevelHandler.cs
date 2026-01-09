@@ -12,7 +12,8 @@ namespace GameScripts.ChangeLevelScript
         public void ChangeLevel(GameSystemsHandler gameSystemsHandler)
         {
             GameSystemsHandler = gameSystemsHandler;
-            ChangeLevelAnimator.SetTrigger(Level);
+            // ChangeLevelAnimator.SetTrigger(Level);
+            ChangeLevelAnimationComplete();
         }
         
         //invoke from animation clip

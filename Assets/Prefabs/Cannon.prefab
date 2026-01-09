@@ -363,6 +363,7 @@ MonoBehaviour:
   CannonRotatonSpeed: 30
   CurrentBugSprite: {fileID: 6715314193367511431}
   NextBugSprite: {fileID: 2903693768633190956}
+  CannonAnimator: {fileID: 483911098288899411}
   BugSpritesList:
   - Color: 0
     BugSprite: {fileID: 483171453, guid: 4c03c619fba72d641ad399029baede6e, type: 3}
@@ -372,6 +373,7 @@ MonoBehaviour:
     BugSprite: {fileID: 1153248040, guid: 69873f5e8c4e80f4589f2889fc6f5658, type: 3}
   - Color: 3
     BugSprite: {fileID: 265666912, guid: 831b4d42c4b047348a726074d551dae3, type: 3}
+  ShootTrigger: ShootTrigger
 --- !u!95 &483911098288899411
 Animator:
   serializedVersion: 7

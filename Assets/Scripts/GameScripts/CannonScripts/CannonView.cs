@@ -28,7 +28,6 @@ namespace GameScripts.CannonScripts
         public string ShootTrigger = "ShootTrigger";
         public string ReloadTrigger = "ReloadTrigger";
         public event Action OnSwapAnimationEvent;
-        public event Action OnSwapIconAnimationEvent;
         
         public void SwapBugReferences()
         {
@@ -40,10 +39,6 @@ namespace GameScripts.CannonScripts
             OnSwapAnimationEvent?.Invoke();
         }
         
-        public void TriggerSwapIconEvent()
-        {
-            OnSwapIconAnimationEvent.Invoke();
-        }
         
         public void TriggerCannonShoot()
         {

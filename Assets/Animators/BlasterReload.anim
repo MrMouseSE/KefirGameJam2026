@@ -1349,14 +1349,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.625
-    functionName: TriggerSwapIconEvent
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.7083333
+  - time: 0.75
     functionName: TriggerSwapEvent
     data: 
     objectReferenceParameter: {fileID: 0}

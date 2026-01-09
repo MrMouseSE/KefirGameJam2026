@@ -19,6 +19,7 @@ namespace GameScripts.CannonScripts
         private float CurrentCooldown { get; set; }
         private List<BuildingColors> _cachedWeightedColors = new List<BuildingColors>();
         private Dictionary<BuildingColors, Sprite> _visualsMap;
+        private Dictionary<BuildingColors, Texture2D> _gradientsMap;
         private string _cachedDefaultAddress;
         private InputPlayerModel _inputPlayerModel;
         private ScoreCounterModel _scoreCounterModel;
@@ -32,8 +33,9 @@ namespace GameScripts.CannonScripts
             _scoreCounterModel = scoreCounterSystem.Model;
 
             var levelData = context.CurrentLevelDescription;
-            LoadLevelAmmo(levelData, DEFAULT_BUG_KEY);
             InitializeVisualsMap();
+            LoadLevelAmmo(levelData, DEFAULT_BUG_KEY);
+            
             UpdateAmmoVisuals();
             
             View.OnSwapAnimationEvent += OnAnimationSwapTriggered;
@@ -164,8 +166,7 @@ namespace GameScripts.CannonScripts
 
             GetNextAmmo();
             
-            View.SwapBugReferences();
-            UpdateAmmoVisuals();
+            View.TriggerCannonReload();
             
             SetCooldown(View.FireCooldown);
         }
@@ -179,12 +180,18 @@ namespace GameScripts.CannonScripts
         private void InitializeVisualsMap()
         {
             _visualsMap = new Dictionary<BuildingColors, Sprite>();
+            _gradientsMap = new Dictionary<BuildingColors, Texture2D>();
             
             foreach (var item in View.BugSpritesList)
             {
                 if (!_visualsMap.ContainsKey(item.Color))
                 {
                     _visualsMap.Add(item.Color, item.BugSprite);
+                }
+                
+                if (!_gradientsMap.ContainsKey(item.Color))
+                {
+                    _gradientsMap.Add(item.Color, item.Gradient);
                 }
             }
         }
@@ -196,14 +203,23 @@ namespace GameScripts.CannonScripts
             
             _visualsMap.TryGetValue(currentAmmo.Color, out var currentSprite);
             _visualsMap.TryGetValue(nextAmmo.Color, out var nextSprite);
-
+            
+            _gradientsMap.TryGetValue(currentAmmo.Color, out var currentGradient);
+            
             ApplyVisualToRenderer(View.CurrentBugSprite, currentSprite);
             ApplyVisualToRenderer(View.NextBugSprite, nextSprite);
+            
+            ApplyVisualGradientToRenderer(View.LichinkasBlyob, currentGradient);
         }
         
         private void ApplyVisualToRenderer(SpriteRenderer renderer, Sprite sprite)
         {
             renderer.sprite = sprite;
+        }
+        
+        private void ApplyVisualGradientToRenderer(SpriteRenderer renderer, Texture2D gradient)
+        {
+            renderer.material.SetTexture("_TintGradient", gradient);
         }
         
         private void LogAmmoDebug()

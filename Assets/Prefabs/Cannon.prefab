@@ -456,16 +456,22 @@ MonoBehaviour:
   CurrentBugSprite: {fileID: 6715314193367511431}
   NextBugSprite: {fileID: 2903693768633190956}
   CannonAnimator: {fileID: 483911098288899411}
+  LichinkasBlyob: {fileID: 2592708969378107394}
   BugSpritesList:
   - Color: 0
     BugSprite: {fileID: 483171453, guid: 4c03c619fba72d641ad399029baede6e, type: 3}
+    Gradient: {fileID: 2800000, guid: d2e01c22ad9563e45be763dee5be72f5, type: 3}
   - Color: 1
     BugSprite: {fileID: 1317479995, guid: 7cb9a5d95bdb4e843b7dd4e299027558, type: 3}
+    Gradient: {fileID: 2800000, guid: 65cbcb220516df547b033fcb9d2beaa9, type: 3}
   - Color: 2
     BugSprite: {fileID: 1153248040, guid: 69873f5e8c4e80f4589f2889fc6f5658, type: 3}
+    Gradient: {fileID: 2800000, guid: 172b3c9c35a89bf4cae86ea1e7cf014c, type: 3}
   - Color: 3
     BugSprite: {fileID: 265666912, guid: 831b4d42c4b047348a726074d551dae3, type: 3}
+    Gradient: {fileID: 2800000, guid: d60b5b172e39bf04dbf4506799db83af, type: 3}
   ShootTrigger: ShootTrigger
+  ReloadTrigger: ReloadTrigger
 --- !u!95 &483911098288899411
 Animator:
   serializedVersion: 7

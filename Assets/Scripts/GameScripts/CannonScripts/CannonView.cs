@@ -10,6 +10,7 @@ namespace GameScripts.CannonScripts
     {
         public BuildingColors Color;
         public Sprite BugSprite;
+        public Texture2D Gradient;
     }
     
     public class CannonView : MonoBehaviour
@@ -22,6 +23,7 @@ namespace GameScripts.CannonScripts
         public SpriteRenderer CurrentBugSprite;
         public SpriteRenderer NextBugSprite;
         public Animator CannonAnimator;
+        public SpriteRenderer LichinkasBlyob;
         
         public List<BugSpriteProfile> BugSpritesList;
         
@@ -38,7 +40,6 @@ namespace GameScripts.CannonScripts
         {
             OnSwapAnimationEvent?.Invoke();
         }
-        
         
         public void TriggerCannonShoot()
         {

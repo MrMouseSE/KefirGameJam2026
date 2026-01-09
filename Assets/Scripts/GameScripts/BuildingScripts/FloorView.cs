@@ -15,7 +15,7 @@ namespace GameScripts.BuildingScripts
         public ParticleSystem HitParticles;
         public ParticleSystem DestroyParticles;
         
-        public float FloorHeight = 1.0f;
+        [HideInInspector] public float FloorHeight = 1.0f;
         public float EatingSpeed = 2.0f;
         public float SpawnOffsetX = 0f;
     }

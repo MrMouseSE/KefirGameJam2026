@@ -63,11 +63,6 @@ namespace GameScripts.BugsScripts
             }
             else
             {
-                if (_floorToDamage != null && _floorToDamage.DestructionSprite != null)
-                {
-                    _floorToDamage.FloorRenderer.sprite = _floorToDamage.DestructionSprite;
-                }
-                
                 View.TriggerInstantDeathAnimation();
                 _distanceToTravel = 0;
             }

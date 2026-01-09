@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using GameScripts.BuildingScripts;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -9,39 +10,50 @@ namespace GameScripts.BugsScripts
     public class BugModel
     {
         public BuildingColors BugColor;
-        
+
         public BugSystem System;
         public BugView View;
         public BuildingModel TargetBuilding;
 
         private GameSystemsHandler _context;
-        
-        private bool _isMoving = false; 
+
+        private bool _isMoving = false;
         private bool _isDead = false;
 
         private float _moveSpeed;
         private float _distanceToTravel;
         private float _currentDistance;
 
-        public void Initialize(BugSystem system, BugView view, BuildingModel target, BuildingColors color, GameSystemsHandler context, float travelDistance, float speed)
+        private List<FloorView> _floorsToEat;
+        private int _currentFloorIndex;
+        private float _nextHideThreshold;
+
+        public void Initialize(BugSystem system, BugView view, BuildingModel target, BuildingColors color,
+            GameSystemsHandler context, float travelDistance, float speed, List<FloorView> floorsToEat)
         {
             System = system;
             View = view;
             TargetBuilding = target;
             BugColor = color;
             _context = context;
+            _floorsToEat = floorsToEat;
 
             View.BugAnimationEvents.OnStartMovingEvent += HandleStartMoving;
-            View.BugAnimationEvents.OnDestroySelfEvent += HandleDestroySelf;
-            
+            View.BugAnimationEvents.OnReadyToDestroyEvent += HandleDestroySelf;
+
             _moveSpeed = speed;
             _currentDistance = 0f;
 
             if (travelDistance > 0)
             {
                 _distanceToTravel = travelDistance + View.SpawnBugHeightOffset;
+
                 View.transform.position += Vector3.up * View.SpawnBugHeightOffset;
                 View.TriggerAppearAnimation();
+
+                _currentFloorIndex = 0;
+                if (_floorsToEat.Count > 0)
+                    _nextHideThreshold = View.SpawnBugHeightOffset + _floorsToEat[0].FloorHeight;
             }
             else
             {
@@ -56,12 +68,31 @@ namespace GameScripts.BugsScripts
 
             var step = _moveSpeed * deltaTime;
 
+            if (_floorsToEat != null && _currentFloorIndex < _floorsToEat.Count)
+            {
+                if (_currentDistance + step >= _nextHideThreshold)
+                {
+                    var floorToHide = _floorsToEat[_currentFloorIndex];
+                    if (floorToHide != null)
+                    {
+                        floorToHide.gameObject.SetActive(false);
+                    }
+
+                    _currentFloorIndex++;
+
+                    if (_currentFloorIndex < _floorsToEat.Count)
+                    {
+                        _nextHideThreshold += _floorsToEat[_currentFloorIndex].FloorHeight;
+                    }
+                }
+            }
+
             if (_currentDistance + step >= _distanceToTravel)
             {
                 var remaining = _distanceToTravel - _currentDistance;
                 View.transform.Translate(Vector3.down * remaining);
                 _currentDistance += remaining;
-                
+
                 StartDeathSequence();
             }
             else
@@ -81,18 +112,20 @@ namespace GameScripts.BugsScripts
         {
             _isMoving = false;
             _isDead = true;
-            
+
             View.TriggerDeathAnimation();
         }
 
         private void HandleDestroySelf()
         {
             View.BugAnimationEvents.OnStartMovingEvent -= HandleStartMoving;
-            View.BugAnimationEvents.OnDestroySelfEvent -= HandleDestroySelf;
-            
+            View.BugAnimationEvents.OnReadyToDestroyEvent -= HandleDestroySelf;
+
             var spawner = _context.GetGameSystemByType(typeof(BugSpawnSystem)) as BugSpawnSystem;
             spawner.Model.NotifyBugDied(this);
 
+            Debug.Log($"[MODEL] HandleDestroySelf получен! Жук должен был умереть, но мы ему запретили.");
+            
             _context.AddSystemToDelete(System);
             Addressables.ReleaseInstance(View.gameObject);
         }

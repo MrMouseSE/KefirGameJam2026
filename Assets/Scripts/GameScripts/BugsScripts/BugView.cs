@@ -8,6 +8,7 @@ namespace GameScripts.BugsScripts
     public class BugView : MonoBehaviour
     {
         [HideInInspector] public BuildingColors BugColor;
+        [HideInInspector] public Material BugMaterial;
         
         public GameObject BugPrefab;
         public Transform BugTransform;

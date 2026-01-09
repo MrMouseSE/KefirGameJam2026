@@ -81,18 +81,22 @@ namespace GameScripts.BuildingScripts
 
             if (topFloorData.FloorColor != _pendingBugColor)
             {
-                _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, _hitData.point, this, _pendingBugColor, 0, 0);
+                _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, _hitData.point, this, _pendingBugColor, 0, 0, null);
                 return;
             }
 
             var travelDistance = 0f;
             var floorsEatenCount = 0;
 
+            var floorsToEat = new List<FloorView>();
+            
             for (int i = _currentTopFloorIndex; i >= 0; i--)
             {
                 if (CurrentFloors[i].FloorColor == _pendingBugColor)
                 {
                     travelDistance += View.Floors[i].FloorHeight;
+                    View.Floors[i].FloorCollider.enabled = false;
+                    floorsToEat.Add(View.Floors[i]);
                     floorsEatenCount++;
                 }
                 else
@@ -112,7 +116,7 @@ namespace GameScripts.BuildingScripts
 
             _currentTopFloorIndex -= floorsEatenCount;
 
-            _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, spawnPos, this, _pendingBugColor, travelDistance, topFloorView.EatingSpeed);
+            _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, spawnPos, this, _pendingBugColor, travelDistance, topFloorView.EatingSpeed, floorsToEat);
         }
 
         private void ConvertToRuins()

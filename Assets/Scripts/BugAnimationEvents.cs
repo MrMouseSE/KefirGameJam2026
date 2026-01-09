@@ -14,6 +14,7 @@ public class BugAnimationEvents : MonoBehaviour
 
     public Action OnStartMovingEvent;
     public Action OnDestroySelfEvent;
+    public Action OnReadyToDestroyEvent;
 
     private void Awake()
     {
@@ -22,13 +23,13 @@ public class BugAnimationEvents : MonoBehaviour
 
     public void OnDeathEffect()
     {
-        OnDestroySelfEvent?.Invoke();
+        // OnDestroySelfEvent?.Invoke();
         PlayEffect(profile => profile.DeathEffect);
     }
 
     public void OnReadyToDestroy()
     {
-        
+        OnReadyToDestroyEvent?.Invoke();
     }
 
     public void OnEatEffect()

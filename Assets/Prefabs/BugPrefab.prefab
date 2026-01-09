@@ -9855,7 +9855,7 @@ MonoBehaviour:
   AppearTriggerName: AppearanceTrigger
   DieTriggerName: DeathTrigger
   InstantDeathTriggerName: InstantDeathTrigger
-  SpawnBugHeightOffset: 2
+  SpawnBugHeightOffset: 0.4
 --- !u!1001 &1312567474594603408
 PrefabInstance:
   m_ObjectHideFlags: 0

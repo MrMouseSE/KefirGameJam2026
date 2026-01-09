@@ -61,6 +61,7 @@ namespace GameScripts
             _gameSystems.Add(new InputPlayerSystem(this, new InputPlayerModel(), Camera.main));
             _gameSystems.Add(new BugSpawnSystem(new BugSpawnModel()));
             _gameSystems.Add(new CannonSystem(new CannonModel(), CannonView));
+            _gameSystems.Add(new ScoreCounterSystem(new ScoreCounterModel(), ScoreCounterView));
 
             foreach (var system in _gameSystems)
             {

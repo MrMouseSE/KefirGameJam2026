@@ -115,6 +115,7 @@ namespace GameScripts.BuildingScripts
             spawnPos.x += topFloorView.SpawnOffsetX;
 
             _currentTopFloorIndex -= floorsEatenCount;
+            _context.CurrentDestroyedBuildings.DestroyedBuildingsValues.Add(1);
 
             _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, spawnPos, this, _pendingBugColor, travelDistance, topFloorView.EatingSpeed, floorsToEat);
         }
@@ -123,6 +124,7 @@ namespace GameScripts.BuildingScripts
         {
             _context.AddSystemToDelete(System);
             _context.RemoveBuilding();
+            _context.CurrentDestroyedBuildings.DestroyedBuildingsValues.Add(3);
         }
 
         public (BuildingColors color, float height, float speed) GetTopFloorInfo()

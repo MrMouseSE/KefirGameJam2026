@@ -4,7 +4,7 @@ namespace GameScripts.ScoreCounterScripts
     {
         public ScoreCounterModel Model;
         public ScoreCounterView View;
-        
+
         public ScoreCounterSystem(ScoreCounterModel model, ScoreCounterView view)
         {
             View = view;
@@ -14,6 +14,7 @@ namespace GameScripts.ScoreCounterScripts
 
         public void InitSystem(GameSystemsHandler context)
         {
+            Model.InitSystems(context);
         }
 
         public void UpdateSystem(float deltaTime, GameSystemsHandler context)

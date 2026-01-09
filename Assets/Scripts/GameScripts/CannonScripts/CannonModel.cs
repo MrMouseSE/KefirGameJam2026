@@ -3,6 +3,7 @@ using System.Linq;
 using GameScripts.BuildingScripts;
 using GameScripts.Descriptions;
 using GameScripts.InputPlayerSystemScript;
+using GameScripts.ScoreCounterScripts;
 using UnityEngine;
 
 namespace GameScripts.CannonScripts
@@ -17,20 +18,22 @@ namespace GameScripts.CannonScripts
 
         private float CurrentCooldown { get; set; }
         private List<BuildingColors> _cachedWeightedColors = new List<BuildingColors>();
-        private Dictionary<BuildingColors, SpriteColorByBuildingColor> _visualsMap;
+        private Dictionary<BuildingColors, Sprite> _visualsMap;
         private string _cachedDefaultAddress;
         private InputPlayerModel _inputPlayerModel;
+        private ScoreCounterModel _scoreCounterModel;
 
         public void Initialize(GameSystemsHandler context, CannonView view)
         {
             View = view;
             var inputSystem = (InputPlayerSystem)context.GetGameSystemByType(typeof(InputPlayerSystem));
-
+            var scoreCounterSystem = (ScoreCounterSystem)context.GetGameSystemByType(typeof(ScoreCounterSystem)); 
             _inputPlayerModel = inputSystem.Model;
+            _scoreCounterModel = scoreCounterSystem.Model;
 
             var levelData = context.CurrentLevelDescription;
             LoadLevelAmmo(levelData, DEFAULT_BUG_KEY);
-            InitializeVisualsMap(levelData);
+            InitializeVisualsMap();
             UpdateAmmoVisuals();
         }
 
@@ -101,6 +104,8 @@ namespace GameScripts.CannonScripts
             {
                 Debug.LogError("[DEBUG] Перезарядка");
                 _inputPlayerModel.ResetAttackButtonValue();
+                var curHealth = _scoreCounterModel.GetCurrentHealth();
+                _scoreCounterModel.ChangeHealth(curHealth--);
                 return;
             }
 
@@ -150,6 +155,7 @@ namespace GameScripts.CannonScripts
             if (!IsReady)
             {
                 _inputPlayerModel.ResetReloadButtonValue();
+                
                 return;
             }
 
@@ -162,15 +168,16 @@ namespace GameScripts.CannonScripts
             SetCooldown(View.FireCooldown);
         }
 
-        private void InitializeVisualsMap(LevelDescription levelData)
+        private void InitializeVisualsMap()
         {
-            _visualsMap = new Dictionary<BuildingColors, SpriteColorByBuildingColor>();
+            _visualsMap = new Dictionary<BuildingColors, Sprite>();
             
-            if (levelData.SpriteColorByBuildingColor == null) return;
-
-            foreach (var item in levelData.SpriteColorByBuildingColor)
+            foreach (var item in View.BugSpritesList)
             {
-                _visualsMap.Add(item.BuildingColor, item);
+                if (!_visualsMap.ContainsKey(item.Color))
+                {
+                    _visualsMap.Add(item.Color, item.BugSprite);
+                }
             }
         }
         
@@ -178,17 +185,17 @@ namespace GameScripts.CannonScripts
         {
             var currentAmmo = PeekNextAmmo(0); 
             var nextAmmo = PeekNextAmmo(1);
+            
+            _visualsMap.TryGetValue(currentAmmo.Color, out var currentSprite);
+            _visualsMap.TryGetValue(nextAmmo.Color, out var nextSprite);
 
-            _visualsMap.TryGetValue(currentAmmo.Color, out var currentVisual);
-            _visualsMap.TryGetValue(nextAmmo.Color, out var nextVisual);
-
-            ApplyVisualToRenderer(View.CurrentBugSprite, currentVisual);
-            ApplyVisualToRenderer(View.NextBugSprite, nextVisual);
+            ApplyVisualToRenderer(View.CurrentBugSprite, currentSprite);
+            ApplyVisualToRenderer(View.NextBugSprite, nextSprite);
         }
         
-        private void ApplyVisualToRenderer(SpriteRenderer renderer, SpriteColorByBuildingColor data)
+        private void ApplyVisualToRenderer(SpriteRenderer renderer, Sprite sprite)
         {
-            renderer.material.SetTexture("_TintGradient", data.SpriteColorValue);
+            renderer.sprite = sprite;
         }
         
         private void LogAmmoDebug()

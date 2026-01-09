@@ -1,7 +1,17 @@
+using System;
+using System.Collections.Generic;
+using GameScripts.BuildingScripts;
 using UnityEngine;
 
 namespace GameScripts.CannonScripts
 {
+    [Serializable]
+    public class BugSpriteProfile
+    {
+        public BuildingColors Color;
+        public Sprite BugSprite;
+    }
+    
     public class CannonView : MonoBehaviour
     {
         public Transform CannonRoot;
@@ -11,5 +21,7 @@ namespace GameScripts.CannonScripts
         public float CannonRotatonSpeed = 150f;
         public SpriteRenderer CurrentBugSprite;
         public SpriteRenderer NextBugSprite;
+        
+        public List<BugSpriteProfile> BugSpritesList;
     }
 }

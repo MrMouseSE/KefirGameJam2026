@@ -113,9 +113,9 @@ TextureImporter:
       name: BuildingThick_destroyed_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 0
-        width: 386
+        width: 390
         height: 333
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -135,10 +135,10 @@ TextureImporter:
       name: BuildingThick_0
       rect:
         serializedVersion: 2
-        x: 389
+        x: 391
         y: 0
-        width: 389
-        height: 332
+        width: 386
+        height: 333
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

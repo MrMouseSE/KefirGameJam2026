@@ -135,10 +135,10 @@ TextureImporter:
       name: buildingHigh_destroyed_1
       rect:
         serializedVersion: 2
-        x: 384
-        y: 190
+        x: 386
+        y: 268
         width: 226
-        height: 392
+        height: 331
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,8 +179,8 @@ TextureImporter:
       name: buildingHigh_1
       rect:
         serializedVersion: 2
-        x: 1211
-        y: 266
+        x: 1213
+        y: 268
         width: 226
         height: 331
       alignment: 7
@@ -205,8 +205,8 @@ TextureImporter:
         y: 2
         width: 227
         height: 270
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

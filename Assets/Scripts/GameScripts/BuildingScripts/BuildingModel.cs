@@ -14,18 +14,19 @@ namespace GameScripts.BuildingScripts
         public BuildingView View;
         public List<FloorData> CurrentFloors;
         public bool IsRuined => _currentTopFloorIndex < 0;
-
+        public bool IsBusy => _busyTimer > 0;
+        
         private GameSystemsHandler _context;
         private BugSpawnSystem _bugSpawnSystem;
         private int _currentTopFloorIndex;
+        private float _busyTimer = 0f;
 
         private bool _isHit;
-        private RaycastHit _hitData;
+        private bool _processingHit = false;
         private string _pendingBugAddress;
+        private RaycastHit _hitData;
         private BuildingColors _pendingBugColor;
 
-        private bool _processingHit = false;
-        
         public void InitializeBuilding(BuildingSystem system, BuildingView view, BuildingData data)
         {
             System = system;
@@ -44,7 +45,7 @@ namespace GameScripts.BuildingScripts
 
         public void SetBuildingHitted(RaycastHit hit, string bugAddress, BuildingColors bugColor)
         {
-            if (IsRuined || _processingHit) return;
+            if (IsRuined || _processingHit || IsBusy) return;
             
             _isHit = true;
             _hitData = hit;
@@ -54,6 +55,11 @@ namespace GameScripts.BuildingScripts
 
         public void UpdateModel(float deltaTime, GameSystemsHandler context)
         {
+            if (_busyTimer > 0)
+            {
+                _busyTimer -= deltaTime;
+            }
+            
             if (_isHit)
             {
                 _processingHit = true;
@@ -62,7 +68,10 @@ namespace GameScripts.BuildingScripts
                 _processingHit = false;
             }
 
-            if (IsRuined) ConvertToRuins();
+            if (IsRuined && !IsBusy)
+            {
+                ConvertToRuins();
+            }
         }
         
         private void ProcessHit()
@@ -86,7 +95,6 @@ namespace GameScripts.BuildingScripts
                 if (CurrentFloors[i].FloorColor == _pendingBugColor)
                 {
                     travelDistance += View.Floors[i].FloorHeight;
-                    
                     floorsEatenCount++;
                 }
                 else
@@ -95,6 +103,11 @@ namespace GameScripts.BuildingScripts
                 }
             }
 
+            if (topFloorView.EatingSpeed > 0)
+            {
+                _busyTimer = (travelDistance / topFloorView.EatingSpeed) + 0.5f;
+            }
+            
             var spawnPos = topFloorView.transform.position;
             spawnPos.y += topFloorView.FloorHeight; 
             spawnPos.x += topFloorView.SpawnOffsetX;

@@ -104,8 +104,6 @@ namespace GameScripts.CannonScripts
             {
                 Debug.LogError("[DEBUG] Перезарядка");
                 _inputPlayerModel.ResetAttackButtonValue();
-                var curHealth = _scoreCounterModel.GetCurrentHealth();
-                _scoreCounterModel.ChangeHealth(curHealth--);
                 return;
             }
 

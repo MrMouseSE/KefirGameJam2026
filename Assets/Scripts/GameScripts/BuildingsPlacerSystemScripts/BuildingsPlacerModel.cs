@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using GameScripts.BuildingScripts;
 using GameScripts.Descriptions;
+using UnityEngine;
 
 namespace GameScripts.BuildingsPlacerSystemScripts
 {
@@ -34,9 +35,23 @@ namespace GameScripts.BuildingsPlacerSystemScripts
         public void RemoveBuilding(BuildingSystem building)
         {
             Buildings.Remove(building);
+            ClearHolder(View.BuildingsFirstLinePlaces, building.View);
+            ClearHolder(View.BuildingsSecondLinePlaces, building.View);
             if (Buildings.Count > 0) return;
             IsAllBuildingsDestroyed = true;
             OnAllBuildingsDestroyed?.Invoke();
+        }
+        
+        private void ClearHolder(BuildingViewHolder[] holders, BuildingView buildingView)
+        {
+            foreach (var holder in holders)
+            {
+                if (holder.BuildingView == buildingView)
+                {
+                    holder.IsHolderOccupied = false;
+                    holder.BuildingView = null;
+                }
+            }
         }
         
         public void UpdateModel(float deltaTime, GameSystemsHandler context)
@@ -62,6 +77,7 @@ namespace GameScripts.BuildingsPlacerSystemScripts
                     return;
                 }
                 View.BuildingsFirstLinePlaces[i].BuildingView = Buildings[i].View;
+                
                 Buildings[i].View.BuildingTransform.position = View.BuildingsFirstLinePlaces[i].BuildingPlace.position;
                 SetCollider(Buildings[i].View.Floors, true);
                 View.BuildingsFirstLinePlaces[i].IsHolderOccupied = true;

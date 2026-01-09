@@ -31,6 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5796763119886964815}
+  - {fileID: 2667015400781423217}
   - {fileID: 2333605288812763932}
   - {fileID: 7566189036407608113}
   m_Father: {fileID: 2878414127549520825}
@@ -174,7 +175,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 501
+  m_SortingOrder: 520
   m_MaskInteraction: 0
   m_Sprite: {fileID: 312011213, guid: 502442e276e8ca241a28773f7b1700c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.4745098}
@@ -214,7 +215,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.3481, y: 0.1815, z: 0.555}
   m_LocalScale: {x: 0.026, y: 0.026, z: 0.026}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6096607742982037044}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -310,6 +311,97 @@ Transform:
   - {fileID: 4363477505811575475}
   m_Father: {fileID: 2333605288812763932}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5008008851808339489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2667015400781423217}
+  - component: {fileID: 2592708969378107394}
+  m_Layer: 0
+  m_Name: Blasterliquid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2667015400781423217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008008851808339489}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7398703593494952976}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &2592708969378107394
+SpriteRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008008851808339489}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 6cbbf9dd70929f84698a2b3f6e8f230a, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 501
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: -659584716, guid: 96ed97309b5cb2243bf80f079eeed514, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 8.79, y: 6.56}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
 --- !u!1 &5548718455629391185
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +451,7 @@ MonoBehaviour:
   CannonRoot: {fileID: 2878414127549520825}
   FirePoint: {fileID: 7566189036407608113}
   ShootParticles: {fileID: 0}
-  FireCooldown: 1.2
+  FireCooldown: 0.3
   CannonRotatonSpeed: 30
   CurrentBugSprite: {fileID: 6715314193367511431}
   NextBugSprite: {fileID: 2903693768633190956}

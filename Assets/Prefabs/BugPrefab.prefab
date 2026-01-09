@@ -91,6 +91,39 @@ SpriteMask:
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
   m_MaskSource: 0
+--- !u!1 &1795055818749890707
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7100126482690298734}
+  m_Layer: 0
+  m_Name: Red
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7100126482690298734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795055818749890707}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6093486842473009785}
+  - {fileID: 1257873691705866054}
+  m_Father: {fileID: 128727387989536170}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6700566973216864927
 GameObject:
   m_ObjectHideFlags: 0
@@ -9799,9 +9832,8 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6854292202267999834}
-  - {fileID: 6093486842473009785}
-  - {fileID: 1257873691705866054}
   - {fileID: 367319497052559438}
+  - {fileID: 7100126482690298734}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-1055963379770164861
@@ -9820,7 +9852,9 @@ MonoBehaviour:
   BugPrefab: {fileID: 9186254784663174487}
   BugTransform: {fileID: 128727387989536170}
   BugAnimationEvents: {fileID: 6254070624259462396}
+  AppearTriggerName: AppearanceTrigger
   DieTriggerName: DeathTrigger
+  InstantDeathTriggerName: InstantDeathTrigger
   SpawnBugHeightOffset: 2
 --- !u!1001 &1312567474594603408
 PrefabInstance:
@@ -10237,11 +10271,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   BugAnimator: {fileID: 8715034031302187520}
-  TestEat: {fileID: 0}
-  BugColor: 0
-  AppearanceEffectRed: {fileID: 4185072223567696649}
-  EatEffect: {fileID: 4957426766031910107}
-  DeathEffect: {fileID: 6093486842457853879}
+  CurrentBugColor: 0
+  EffectsProfiles:
+  - Color: 0
+    AppearanceEffect: {fileID: 4185072223567696649}
+    EatEffect: {fileID: 4957426766031910107}
+    DeathEffect: {fileID: 6093486842457853879}
+  - Color: 1
+    AppearanceEffect: {fileID: 4185072223567696649}
+    EatEffect: {fileID: 4957426766031910107}
+    DeathEffect: {fileID: 6093486842457853879}
+  - Color: 2
+    AppearanceEffect: {fileID: 4185072223567696649}
+    EatEffect: {fileID: 4957426766031910107}
+    DeathEffect: {fileID: 6093486842457853879}
+  - Color: 3
+    AppearanceEffect: {fileID: 4185072223567696649}
+    EatEffect: {fileID: 4957426766031910107}
+    DeathEffect: {fileID: 6093486842457853879}
 --- !u!4 &2351806932444092039 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -5578720959863392489, guid: 2839593ae90db5a40975a33545b5279b, type: 3}
@@ -10257,7 +10304,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 165672, guid: 146d2ff25be0f824fa285b16b2915ff3, type: 3}
       propertyPath: m_Name
-      value: DustDirtyPoofSoft
+      value: EatEffect
       objectReference: {fileID: 0}
     - target: {fileID: 454262, guid: 146d2ff25be0f824fa285b16b2915ff3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10352,11 +10399,11 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 128727387989536170}
+    m_TransformParent: {fileID: 7100126482690298734}
     m_Modifications:
     - target: {fileID: 177804, guid: 658fc6655c1c78e45a80243a241f1b1e, type: 3}
       propertyPath: m_Name
-      value: MagicSoftExplosionRed
+      value: DeathExplosionRed
       objectReference: {fileID: 0}
     - target: {fileID: 443864, guid: 658fc6655c1c78e45a80243a241f1b1e, type: 3}
       propertyPath: m_LocalScale.x
@@ -10451,11 +10498,11 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 128727387989536170}
+    m_TransformParent: {fileID: 7100126482690298734}
     m_Modifications:
     - target: {fileID: 13301048646092075, guid: 334ccdade87a4194b9f1855c484967dc, type: 3}
       propertyPath: m_Name
-      value: Lightning Strike Red
+      value: SpawnRed
       objectReference: {fileID: 0}
     - target: {fileID: 1355973933852736831, guid: 334ccdade87a4194b9f1855c484967dc, type: 3}
       propertyPath: m_SortingOrder

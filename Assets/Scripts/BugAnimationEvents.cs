@@ -1,46 +1,61 @@
 using System;
-using GameScripts.BuildingScripts;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using GameScripts.BuildingScripts;
 
 public class BugAnimationEvents : MonoBehaviour
 {
     public Animator BugAnimator;
-    public TestEat TestEat; 
-    public BuildingColors BugColor; 
-    public ParticleSystem AppearanceEffectRed;
-    public ParticleSystem EatEffect;
-    public ParticleSystem DeathEffect;
+    public BuildingColors CurrentBugColor;
+    public List<BugEffectsProfile> EffectsProfiles;
+
+    private Dictionary<BuildingColors, BugEffectsProfile> _effectsMap;
 
     public Action OnStartMovingEvent;
     public Action OnDestroySelfEvent;
-    
+
+    private void Awake()
+    {
+        _effectsMap = EffectsProfiles.ToDictionary(bugEffectsProfile => bugEffectsProfile.Color, bugEffectsProfile => bugEffectsProfile);
+    }
+
     public void OnDeathEffect()
     {
         OnDestroySelfEvent?.Invoke();
-        EatEffect.Stop();
+        PlayEffect(profile => profile.DeathEffect);
     }
-    
+
+    public void OnReadyToDestroy()
+    {
+        
+    }
+
     public void OnEatEffect()
     {
         OnStartMovingEvent?.Invoke();
-        EatEffect.Play();
+        PlayEffect(profile => profile.EatEffect);
     }
 
     public void OnAppearanceEffect()
     {
-        switch (BugColor)
-        {
-            case BuildingColors.Red:
-                AppearanceEffectRed.Play();
-                break;
-            case BuildingColors.Blue:
-                break;
-            case BuildingColors.Green:
-                break;
-            case BuildingColors.Yellow:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        } 
+        PlayEffect(profile => profile.AppearanceEffect);
     }
+
+    private void PlayEffect(Func<BugEffectsProfile, ParticleSystem> effectSelector)
+    {
+        if (!_effectsMap.TryGetValue(CurrentBugColor, out var profile)) return;
+        
+        var effectToPlay = effectSelector(profile);
+        effectToPlay.Play();
+    }
+}
+
+[Serializable]
+public class BugEffectsProfile
+{
+    public BuildingColors Color;
+    public ParticleSystem AppearanceEffect;
+    public ParticleSystem EatEffect;
+    public ParticleSystem DeathEffect;
 }

@@ -24,6 +24,7 @@ public class BugAnimationEvents : MonoBehaviour
     public void OnDeathEffect()
     {
         // OnDestroySelfEvent?.Invoke();
+        StopEffect(profile => profile.EatEffect);
         PlayEffect(profile => profile.DeathEffect);
     }
 
@@ -50,6 +51,15 @@ public class BugAnimationEvents : MonoBehaviour
         var effectToPlay = effectSelector(profile);
         effectToPlay.Play();
     }
+    
+    private void StopEffect(Func<BugEffectsProfile, ParticleSystem> effectSelector)
+    {
+        if (!_effectsMap.TryGetValue(CurrentBugColor, out var profile)) return;
+        
+        var effectToPlay = effectSelector(profile);
+        effectToPlay.Stop();
+    }
+    
 }
 
 [Serializable]

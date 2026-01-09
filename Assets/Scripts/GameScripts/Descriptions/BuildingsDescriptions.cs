@@ -9,6 +9,8 @@ namespace GameScripts.Descriptions
     {
         public float BuildingChancePercent;
         public BuildingView BuildingPrefab;
+        public int BuildingDestroyValue;
+        public int FloorDestroyValue;
         public List<FloorSpriteColorPair> BuildingSpriteColorPairs;
     }
 }

@@ -38,6 +38,11 @@ namespace GameScripts.CannonScripts
             OnSwapAnimationEvent?.Invoke();
         }
         
+        public void TriggerSwapIconEvent()
+        {
+            
+        }
+        
         public void TriggerCannonShoot()
         {
             CannonAnimator.SetTrigger(ShootTrigger);

@@ -11,8 +11,7 @@ namespace GameScripts.Descriptions
     {
         public FloorView FloorPrefab; 
         public float FloorHeight;
-        public float BugYOffsetAtFloor;
-        public float FloorXOffset;
+        public Vector2 BugXYOffset = new(0, 0);
         public Vector3 ColliderOffset = new (0f, 0f, 0f);
         public List<BuildingColors> BuildingColors;
         public Sprite FloorSprite;

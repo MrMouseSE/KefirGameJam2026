@@ -8,7 +8,5 @@ namespace GameScripts.ScoreCounterScripts
         public GameObject ScorePrefab;
         public Transform ScoreTransform;
         public TMP_Text ScoreText;
-        public TMP_Text HealthText;
-        public int MaxHealth;
     }
 }

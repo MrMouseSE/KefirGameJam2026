@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using GameScripts.BugsScripts;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace GameScripts.BuildingScripts
 {
@@ -24,6 +22,7 @@ namespace GameScripts.BuildingScripts
         private string _pendingBugAddress;
         private RaycastHit _hitData;
         private BuildingColors _pendingBugColor;
+        private int _buildingDestroyValue;
 
         public void InitializeBuilding(BuildingSystem system, BuildingView view, BuildingData data)
         {
@@ -31,6 +30,7 @@ namespace GameScripts.BuildingScripts
             View = view;
 
             CurrentFloors = data.FloorsData;
+            _buildingDestroyValue = data.BuildingDestroyValue;
             _currentTopFloorIndex = CurrentFloors.Count - 1;
         }
 
@@ -115,7 +115,7 @@ namespace GameScripts.BuildingScripts
             spawnPos.x += topFloorView.SpawnOffsetX;
 
             _currentTopFloorIndex -= floorsEatenCount;
-            _context.CurrentDestroyedBuildings.DestroyedBuildingsValues.Add(1);
+            _context.CurrentDestroyedBuildings.DestroyedBuildingsValues.Add(CurrentFloors[_currentTopFloorIndex].FloorDestroyValue);
 
             _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, spawnPos, this, _pendingBugColor, travelDistance, topFloorView.EatingSpeed, floorsToEat);
         }
@@ -124,7 +124,7 @@ namespace GameScripts.BuildingScripts
         {
             _context.AddSystemToDelete(System);
             _context.RemoveBuilding();
-            _context.CurrentDestroyedBuildings.DestroyedBuildingsValues.Add(3);
+            _context.CurrentDestroyedBuildings.DestroyedBuildingsValues.Add(_buildingDestroyValue);
         }
 
         public (BuildingColors color, float height, float speed) GetTopFloorInfo()

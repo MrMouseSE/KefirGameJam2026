@@ -63,6 +63,7 @@ namespace GameScripts.BuildingsPlacerSystemScripts
                 }
                 View.BuildingsFirstLinePlaces[i].BuildingView = Buildings[i].View;
                 Buildings[i].View.BuildingTransform.position = View.BuildingsFirstLinePlaces[i].BuildingPlace.position;
+                SetCollider(Buildings[i].View.Floors, true);
                 View.BuildingsFirstLinePlaces[i].IsHolderOccupied = true;
             }
 
@@ -75,7 +76,16 @@ namespace GameScripts.BuildingsPlacerSystemScripts
                 }
                 View.BuildingsSecondLinePlaces[i-_buildingsWidth].BuildingView = Buildings[i].View;
                 Buildings[i].View.BuildingTransform.position = View.BuildingsSecondLinePlaces[i-_buildingsWidth].BuildingPlace.position;
+                SetCollider(Buildings[i].View.Floors, false);
                 View.BuildingsSecondLinePlaces[i-_buildingsWidth].IsHolderOccupied = true;
+            }
+        }
+
+        private void SetCollider(List<FloorView> floorViews, bool isEnabled)
+        {
+            foreach (var floor in floorViews)
+            {
+                floor.FloorCollider.enabled = isEnabled;
             }
         }
     }

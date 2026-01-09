@@ -14,12 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameScripts.Descriptions.BuildingsDescriptions
   BuildingChancePercent: 0.65
   BuildingPrefab: {fileID: 6133816667179342604, guid: ccc4f8ad18b26b642b2849f71dfac159, type: 3}
+  BuildingDestroyValue: 2
+  FloorDestroyValue: 1
   BuildingSpriteColorPairs:
   - FloorPrefab: {fileID: 9077172280243770836, guid: e8289d36711b922498dffd470e9b1cd2, type: 3}
     FloorHeight: 0.5
+    ColliderOffset: {x: 0, y: 0, z: 0}
     BuildingColors: 000000000100000003000000
     FloorSprite: {fileID: 0}
+    FloorDestructionSprite: {fileID: 0}
   - FloorPrefab: {fileID: 9077172280243770836, guid: e8289d36711b922498dffd470e9b1cd2, type: 3}
     FloorHeight: 0.5
+    ColliderOffset: {x: 0, y: 0, z: 0}
     BuildingColors: 000000000100000003000000
     FloorSprite: {fileID: 0}
+    FloorDestructionSprite: {fileID: 0}

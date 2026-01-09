@@ -22,6 +22,7 @@ namespace GameScripts.BuildingFactory
             buildingView.Floors = new List<FloorView>();
             BuildingData buildingData = new BuildingData();
             buildingData.FloorsData = new List<FloorData>();
+            buildingData.BuildingDestroyValue = level.BuildingDestroyValue;
             for (int i = 0; i < level.BuildingSpriteColorPairs.Count; i++)
             {
                 var floorPair = level.BuildingSpriteColorPairs[i];
@@ -35,6 +36,7 @@ namespace GameScripts.BuildingFactory
                 buildingView.Floors.Add(floorView);
                 FloorData floorData = new FloorData();
                 floorData.FloorColor = level.BuildingSpriteColorPairs[i].BuildingColors[Random.Range(0,level.BuildingSpriteColorPairs[i].BuildingColors.Count)];
+                floorData.FloorDestroyValue = level.FloorDestroyValue;
                 floorView.FloorRenderer.sprite = level.BuildingSpriteColorPairs[i].FloorSprite;
                 floorView.FloorRenderer.material.SetTexture(TintGradientID, _levelDescription.SpriteColorByBuildingColor.Find(x => x.BuildingColor == floorData.FloorColor).SpriteColorValue);
                 buildingData.FloorsData.Add(floorData);

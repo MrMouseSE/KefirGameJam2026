@@ -31,6 +31,7 @@ namespace GameScripts.CannonScripts
         public void SwapBugReferences()
         {
             (CurrentBugSprite, NextBugSprite) = (NextBugSprite, CurrentBugSprite);
+            (CurrentBugSprite.name, NextBugSprite.name) = (NextBugSprite.name, CurrentBugSprite.name);
         }
         
         public void TriggerSwapEvent()

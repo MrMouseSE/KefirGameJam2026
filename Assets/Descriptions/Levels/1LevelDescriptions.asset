@@ -17,7 +17,10 @@ MonoBehaviour:
   BugsCount: {x: 20, y: 30}
   BuildingsWidthCount: 4
   BuildingsDescriptions:
+  - {fileID: 11400000, guid: c2d4ca95265500f47afe920cff38c284, type: 2}
   - {fileID: 11400000, guid: 60bcdc5c01240574984586f9d610f9d5, type: 2}
+  - {fileID: 11400000, guid: 8c778fd289ad54e4c99d156828edf77e, type: 2}
+  - {fileID: 11400000, guid: 948bf19fa995ecb44b2fc7b1d4b052f6, type: 2}
   SpriteColorByBuildingColor:
   - BuildingColor: 0
     SpriteColorValue: {fileID: 2800000, guid: d2e01c22ad9563e45be763dee5be72f5, type: 3}

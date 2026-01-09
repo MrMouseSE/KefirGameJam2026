@@ -113,10 +113,10 @@ TextureImporter:
       name: BuildingThick_destroyed_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 3
         y: 0
-        width: 389
-        height: 1024
+        width: 386
+        height: 333
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,7 +138,7 @@ TextureImporter:
         x: 389
         y: 0
         width: 389
-        height: 1024
+        height: 332
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,9 +158,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 776
-        y: 0
-        width: 388
-        height: 1024
+        y: 2
+        width: 382
+        height: 736
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,10 +179,10 @@ TextureImporter:
       name: BuildingThick_1
       rect:
         serializedVersion: 2
-        x: 1164
-        y: 0
-        width: 388
-        height: 1024
+        x: 1203
+        y: 282
+        width: 341
+        height: 458
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -11,26 +11,25 @@ namespace GameScripts.BugsScripts
         
         public GameObject BugPrefab;
         public Transform BugTransform;
-        public Animator BugAnimator;
-        public string DieTriggerName = "Die";
+        public BugAnimationEvents BugAnimationEvents;
+        public string AppearTriggerName = "AppearanceTrigger";
+        public string DieTriggerName = "DeathTrigger";
+        public string InstantDeathTriggerName = "InstantDeathTrigger";
         public float SpawnBugHeightOffset = 2.0f;
 
-        public Action OnStartMovingEvent;
-        public Action OnDestroySelfEvent;
-
-        public void StartMoving()
+        public void TriggerAppearAnimation()
         {
-            OnStartMovingEvent?.Invoke();
-        }
-
-        public void DestroySelf()
+            BugAnimationEvents.BugAnimator.SetTrigger(AppearTriggerName);
+        } 
+            
+        public void TriggerInstantDeathAnimation()
         {
-            OnDestroySelfEvent?.Invoke();
-        }
-
+            BugAnimationEvents.BugAnimator.SetTrigger(InstantDeathTriggerName);
+        } 
+        
         public void TriggerDeathAnimation()
         {
-            BugAnimator.SetTrigger(DieTriggerName);
+            BugAnimationEvents.BugAnimator.SetTrigger(DieTriggerName);
         }
     }
 }

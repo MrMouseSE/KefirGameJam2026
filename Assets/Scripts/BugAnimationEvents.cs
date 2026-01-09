@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class BugAnimationEvents : MonoBehaviour
 {
+    public Animator BugAnimator;
     public TestEat TestEat; 
     public BuildingColors BugColor; 
     public ParticleSystem AppearanceEffectRed;
     public ParticleSystem EatEffect;
     public ParticleSystem DeathEffect;
 
+    public Action OnStartMovingEvent;
+    public Action OnDestroySelfEvent;
+    
     public void OnDeathEffect()
     {
-        DeathEffect.Play();
+        OnDestroySelfEvent?.Invoke();
         EatEffect.Stop();
     }
     
     public void OnEatEffect()
     {
-        TestEat.MoveBug();
+        OnStartMovingEvent?.Invoke();
         EatEffect.Play();
     }
 

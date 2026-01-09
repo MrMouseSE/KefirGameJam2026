@@ -1858,8 +1858,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameScripts.GameSystemsHandler
   LevelsDescriptionsHolder: {fileID: 11400000, guid: 88a0ee97a200d314d84077fc20b6d828, type: 2}
   PlacerView: {fileID: 724179162}
-  ScoreCounterView: {fileID: 0}
-  CannonView: {fileID: 0}
+  ScoreCounterView: {fileID: 1655143499}
+  CannonView: {fileID: 1170346536}
   ChangeLevelHandler: {fileID: 1283639184}
 --- !u!1 &1141212059
 GameObject:

@@ -9798,10 +9798,10 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 367319497052559438}
   - {fileID: 6854292202267999834}
   - {fileID: 6093486842473009785}
   - {fileID: 1257873691705866054}
+  - {fileID: 367319497052559438}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-1055963379770164861
@@ -9816,15 +9816,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc18010b557347729aa5f0ee79b3f537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameScripts.BugsScripts.BugView
+  BugColor: 0
   BugPrefab: {fileID: 9186254784663174487}
   BugTransform: {fileID: 128727387989536170}
-  BugAnimator: {fileID: 0}
-  DestroyTrigger: 
-  HitParticles: {fileID: 0}
-  DestroyParticles: {fileID: 0}
-  DeathSplatterParticles: {fileID: 0}
-  BugColor: 0
-  IsAttackAnimationFinished: 0
+  BugAnimationEvents: {fileID: 6254070624259462396}
+  DieTriggerName: DeathTrigger
+  SpawnBugHeightOffset: 2
 --- !u!1001 &1312567474594603408
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10239,6 +10236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51a5c309efd8f624197e98692c6c5173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  BugAnimator: {fileID: 8715034031302187520}
   TestEat: {fileID: 0}
   BugColor: 0
   AppearanceEffectRed: {fileID: 4185072223567696649}

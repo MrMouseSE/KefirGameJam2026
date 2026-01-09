@@ -225,10 +225,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FloorPrefab: {fileID: 6355717652551310551}
+  FloorCollider: {fileID: 8568065075063280879}
   FloorTransform: {fileID: 6767567669759103745}
   FloorRenderer: {fileID: 4415789082902735179}
+  FloorAnimation: {fileID: 0}
+  FloodDestroyClip: {fileID: 0}
+  FloorHitClip: {fileID: 0}
   HitParticles: {fileID: 3450824760130866004}
   DestroyParticles: {fileID: 9096816817533547146}
+  FloorHeight: 1
+  EatingSpeed: 2
+  SpawnOffsetX: 0
 --- !u!1001 &3333392734091924997
 PrefabInstance:
   m_ObjectHideFlags: 0

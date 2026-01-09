@@ -31,8 +31,8 @@ namespace GameScripts.BugsScripts
             BugColor = color;
             _context = context;
 
-            View.OnStartMovingEvent += HandleStartMoving;
-            View.OnDestroySelfEvent += HandleDestroySelf;
+            View.BugAnimationEvents.OnStartMovingEvent += HandleStartMoving;
+            View.BugAnimationEvents.OnDestroySelfEvent += HandleDestroySelf;
             
             _moveSpeed = speed;
             _currentDistance = 0f;
@@ -41,21 +41,20 @@ namespace GameScripts.BugsScripts
             {
                 _distanceToTravel = travelDistance + View.SpawnBugHeightOffset;
                 View.transform.position += Vector3.up * View.SpawnBugHeightOffset;
+                View.TriggerAppearAnimation();
             }
             else
             {
+                View.TriggerInstantDeathAnimation();
                 _distanceToTravel = 0;
             }
-
-            //DEBUG
-            View.StartMoving();
         }
 
         public void UpdateModel(float deltaTime)
         {
             if (_isDead || !_isMoving) return;
 
-            float step = _moveSpeed * deltaTime;
+            var step = _moveSpeed * deltaTime;
 
             if (_currentDistance + step >= _distanceToTravel)
             {
@@ -88,8 +87,8 @@ namespace GameScripts.BugsScripts
 
         private void HandleDestroySelf()
         {
-            View.OnStartMovingEvent -= HandleStartMoving;
-            View.OnDestroySelfEvent -= HandleDestroySelf;
+            View.BugAnimationEvents.OnStartMovingEvent -= HandleStartMoving;
+            View.BugAnimationEvents.OnDestroySelfEvent -= HandleDestroySelf;
             
             var spawner = _context.GetGameSystemByType(typeof(BugSpawnSystem)) as BugSpawnSystem;
             spawner.Model.NotifyBugDied(this);

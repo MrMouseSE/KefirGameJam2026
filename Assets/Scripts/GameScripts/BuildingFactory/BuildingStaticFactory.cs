@@ -28,6 +28,10 @@ namespace GameScripts.BuildingFactory
                 var floorView = Object.Instantiate(floorPair.FloorPrefab, buildingView.FloorsTransform);
                 floorView.FloorTransform.localPosition = Vector3.up * (i * floorPair.FloorHeight);
                 floorView.FloorHeight = floorPair.FloorHeight;
+                var spriteSize = floorView.FloorCollider.size = floorPair.FloorSprite.bounds.size;
+                var renderScale = floorView.FloorRenderer.transform.localScale;
+                floorView.FloorCollider.size = new Vector3(spriteSize.x * renderScale.x, spriteSize.y * renderScale.y, 0.02F);
+                floorView.FloorCollider.center = floorPair.ColliderOffset;
                 buildingView.Floors.Add(floorView);
                 FloorData floorData = new FloorData();
                 floorData.FloorColor = level.BuildingSpriteColorPairs[i].BuildingColors[Random.Range(0,level.BuildingSpriteColorPairs[i].BuildingColors.Count)];

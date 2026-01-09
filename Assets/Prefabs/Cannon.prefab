@@ -451,7 +451,7 @@ MonoBehaviour:
   CannonRoot: {fileID: 2878414127549520825}
   FirePoint: {fileID: 7566189036407608113}
   ShootParticles: {fileID: 0}
-  FireCooldown: 0.3
+  FireCooldown: 1.114
   CannonRotatonSpeed: 30
   CurrentBugSprite: {fileID: 6715314193367511431}
   NextBugSprite: {fileID: 2903693768633190956}

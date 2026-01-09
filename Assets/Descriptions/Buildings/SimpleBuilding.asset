@@ -19,6 +19,7 @@ MonoBehaviour:
   BuildingSpriteColorPairs:
   - FloorPrefab: {fileID: 9077172280243770836, guid: e8289d36711b922498dffd470e9b1cd2, type: 3}
     FloorHeight: 0.5
+    BugXYOffset: {x: 0, y: 0.2}
     ColliderOffset: {x: 0, y: 0.44, z: 0}
     BuildingColors: 00000000010000000300000002000000
     FloorSprite: {fileID: 2015333710, guid: 460f1dfabc0f8f744bddd9aa9e34e812, type: 3}

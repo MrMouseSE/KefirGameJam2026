@@ -19,17 +19,15 @@ MonoBehaviour:
   BuildingSpriteColorPairs:
   - FloorPrefab: {fileID: 9077172280243770836, guid: e8289d36711b922498dffd470e9b1cd2, type: 3}
     FloorHeight: 0.04
-    BugYOffsetAtFloor: 0
-    FloorXOffset: 0
+    BugXYOffset: {x: 0, y: 0.75}
     ColliderOffset: {x: 0, y: 0.43, z: 0}
     BuildingColors: 0000000001000000
     FloorSprite: {fileID: -1854335472, guid: a337efcac71b9b940bf886072a2fbe13, type: 3}
-    FloorDestructionSprite: {fileID: 0}
+    FloorDestructionSprite: {fileID: -1785214394, guid: a337efcac71b9b940bf886072a2fbe13, type: 3}
   - FloorPrefab: {fileID: 9077172280243770836, guid: e8289d36711b922498dffd470e9b1cd2, type: 3}
     FloorHeight: 0.7
-    BugYOffsetAtFloor: 0
-    FloorXOffset: 0
+    BugXYOffset: {x: 0.15, y: 0.3}
     ColliderOffset: {x: 0, y: 0.61, z: 0}
     BuildingColors: 0200000003000000
     FloorSprite: {fileID: 1570447485, guid: a337efcac71b9b940bf886072a2fbe13, type: 3}
-    FloorDestructionSprite: {fileID: 0}
+    FloorDestructionSprite: {fileID: -1176845748, guid: a337efcac71b9b940bf886072a2fbe13, type: 3}

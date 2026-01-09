@@ -92,6 +92,7 @@ namespace GameScripts.BuildingsPlacerSystemScripts
                 }
                 View.BuildingsSecondLinePlaces[i-_buildingsWidth].BuildingView = Buildings[i].View;
                 Buildings[i].View.BuildingTransform.position = View.BuildingsSecondLinePlaces[i-_buildingsWidth].BuildingPlace.position;
+                Buildings[i].View.AppearAnimation.Play();
                 SetCollider(Buildings[i].View.Floors, false);
                 View.BuildingsSecondLinePlaces[i-_buildingsWidth].IsHolderOccupied = true;
             }

@@ -209,7 +209,7 @@ SpriteRenderer:
   m_Size: {x: 5.11, y: 6.33}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!1 &6355717652551310551
 GameObject:
@@ -262,14 +262,16 @@ MonoBehaviour:
   FloorTransform: {fileID: 6767567669759103745}
   FloorRenderer: {fileID: 4415789082902735179}
   FloorAnimation: {fileID: 1849630247855074487}
-  FloodDestroyClip: {fileID: 7400000, guid: 0a3934f7b5fc7f54d9250084ae44c49e, type: 2}
+  FloorDestroyClip: {fileID: 7400000, guid: 0a3934f7b5fc7f54d9250084ae44c49e, type: 2}
   FloorHitClip: {fileID: 7400000, guid: b98eb5a82406ffe4bbf243ae0e75e3e6, type: 2}
   HitParticles: {fileID: 3450824760130866004}
   DestroyParticles: {fileID: 9096816817533547146}
   FloorAnimationEvents: {fileID: 1518198500593997399}
-  FloorHeight: 1
+  DestructionSprite: {fileID: 0}
   EatingSpeed: 2
+  FloorHeight: 1
   SpawnOffsetX: 0
+  BugSpawnOffsetY: 0
 --- !u!1001 &3333392734091924997
 PrefabInstance:
   m_ObjectHideFlags: 0

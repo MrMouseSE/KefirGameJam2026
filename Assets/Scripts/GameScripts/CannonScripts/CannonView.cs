@@ -21,7 +21,26 @@ namespace GameScripts.CannonScripts
         public float CannonRotatonSpeed = 150f;
         public SpriteRenderer CurrentBugSprite;
         public SpriteRenderer NextBugSprite;
+        public Animator CannonAnimator;
         
         public List<BugSpriteProfile> BugSpritesList;
+        
+        public string ShootTrigger = "ShootTrigger";
+        public event Action OnSwapAnimationEvent;
+        
+        public void SwapBugReferences()
+        {
+            (CurrentBugSprite, NextBugSprite) = (NextBugSprite, CurrentBugSprite);
+        }
+        
+        public void TriggerSwapEvent()
+        {
+            OnSwapAnimationEvent?.Invoke();
+        }
+        
+        public void TriggerCannonShoot()
+        {
+            CannonAnimator.SetTrigger(ShootTrigger);
+        }
     }
 }

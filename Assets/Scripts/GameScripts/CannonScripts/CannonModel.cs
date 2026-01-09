@@ -35,6 +35,8 @@ namespace GameScripts.CannonScripts
             LoadLevelAmmo(levelData, DEFAULT_BUG_KEY);
             InitializeVisualsMap();
             UpdateAmmoVisuals();
+            
+            View.OnSwapAnimationEvent += OnAnimationSwapTriggered;
         }
 
         public void UpdateModel(float deltaTime, GameSystemsHandler context)
@@ -139,7 +141,7 @@ namespace GameScripts.CannonScripts
 
             var ammoData = GetNextAmmo();
 
-            UpdateAmmoVisuals();
+            View.TriggerCannonShoot();
             
             var bugAddress = "DefaultBug";
 
@@ -153,7 +155,6 @@ namespace GameScripts.CannonScripts
             if (!IsReady)
             {
                 _inputPlayerModel.ResetReloadButtonValue();
-                
                 return;
             }
 
@@ -162,10 +163,19 @@ namespace GameScripts.CannonScripts
             LogAmmoDebug();
 
             GetNextAmmo();
+            
+            View.SwapBugReferences();
             UpdateAmmoVisuals();
+            
             SetCooldown(View.FireCooldown);
         }
 
+        private void OnAnimationSwapTriggered()
+        {
+            View.SwapBugReferences();
+            UpdateAmmoVisuals();
+        }
+        
         private void InitializeVisualsMap()
         {
             _visualsMap = new Dictionary<BuildingColors, Sprite>();
@@ -283,6 +293,11 @@ namespace GameScripts.CannonScripts
         private void SetCooldown(float duration)
         {
             CurrentCooldown = duration;
+        }
+        
+        public void Dispose() 
+        {
+            View.OnSwapAnimationEvent -= OnAnimationSwapTriggered;
         }
     }
 }

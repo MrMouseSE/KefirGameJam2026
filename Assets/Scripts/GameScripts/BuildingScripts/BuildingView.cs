@@ -13,7 +13,8 @@ namespace GameScripts.BuildingScripts
         public Transform FloorsTransform;
         public List<FloorView> Floors;
         public BuildingModel Model;
-
+        public Animation AppearAnimation;
+            
         [Space(10)]
         public ParticleSystem HitParticles;
         public ParticleSystem DestroyParticles;

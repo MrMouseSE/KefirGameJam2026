@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameScripts.BuildingScripts
 {
@@ -10,7 +11,7 @@ namespace GameScripts.BuildingScripts
         public Transform FloorTransform;
         public SpriteRenderer FloorRenderer;
         public Animation FloorAnimation;
-        public AnimationClip FloodDestroyClip;
+        public AnimationClip FloorDestroyClip;
         public AnimationClip FloorHitClip;
         public ParticleSystem HitParticles;
         public ParticleSystem DestroyParticles;
@@ -25,14 +26,12 @@ namespace GameScripts.BuildingScripts
         
         public void PlayEatAnimation()
         {
-            FloorAnimation.clip = FloorHitClip;
-            FloorAnimation.Play();
+            FloorAnimation.Play(FloorHitClip.name);
         }
 
         public void PlayDestroyAnimation()
         {
-            FloorAnimation.clip = FloodDestroyClip;
-            FloorAnimation.Play();
+            FloorAnimation.Play(FloorDestroyClip.name);
         }
     }
 }

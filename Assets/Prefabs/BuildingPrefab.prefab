@@ -46,7 +46,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: 2286a77a101f69049970e29f2a678542, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   BuildingTransform: {fileID: 5158543458218061512}
   FloorsTransform: {fileID: 717697858140714171}
   Floors: []
+  AppearAnimation: {fileID: 574247888240631744}
   HitParticles: {fileID: 179782177866549406}
   DestroyParticles: {fileID: 4720760371334677076}
 --- !u!1 &8094268720058225866

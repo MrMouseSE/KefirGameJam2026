@@ -179,9 +179,9 @@ TextureImporter:
       name: BuildingThick_1
       rect:
         serializedVersion: 2
-        x: 1203
+        x: 1162
         y: 282
-        width: 341
+        width: 389
         height: 458
       alignment: 7
       pivot: {x: 0.5, y: 0}

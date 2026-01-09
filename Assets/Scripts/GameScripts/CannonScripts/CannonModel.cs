@@ -37,6 +37,7 @@ namespace GameScripts.CannonScripts
             UpdateAmmoVisuals();
             
             View.OnSwapAnimationEvent += OnAnimationSwapTriggered;
+            View.OnSwapIconAnimationEvent += OnSwapIconTriggered;
         }
 
         public void UpdateModel(float deltaTime, GameSystemsHandler context)
@@ -164,10 +165,14 @@ namespace GameScripts.CannonScripts
 
             GetNextAmmo();
             
-            View.SwapBugReferences();
-            UpdateAmmoVisuals();
+            View.TriggerCannonReload();
             
             SetCooldown(View.FireCooldown);
+        }
+
+        private void OnSwapIconTriggered()
+        {
+            UpdateAmmoVisuals();
         }
 
         private void OnAnimationSwapTriggered()

@@ -26,7 +26,9 @@ namespace GameScripts.CannonScripts
         public List<BugSpriteProfile> BugSpritesList;
         
         public string ShootTrigger = "ShootTrigger";
+        public string ReloadTrigger = "ReloadTrigger";
         public event Action OnSwapAnimationEvent;
+        public event Action OnSwapIconAnimationEvent;
         
         public void SwapBugReferences()
         {
@@ -40,12 +42,17 @@ namespace GameScripts.CannonScripts
         
         public void TriggerSwapIconEvent()
         {
-            
+            OnSwapIconAnimationEvent.Invoke();
         }
         
         public void TriggerCannonShoot()
         {
             CannonAnimator.SetTrigger(ShootTrigger);
+        }
+        
+        public void TriggerCannonReload()
+        {
+            CannonAnimator.SetTrigger(ReloadTrigger);
         }
     }
 }

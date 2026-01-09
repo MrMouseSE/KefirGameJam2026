@@ -123,10 +123,9 @@ namespace GameScripts
             }
         }
 
-        private void RemoveBuilding()
+        public void RemoveBuilding()
         {
-            BuildingsPlacerSystem placerSystem =
-                (BuildingsPlacerSystem)GetGameSystemByType(typeof(BuildingsPlacerSystem));
+            BuildingsPlacerSystem placerSystem = (BuildingsPlacerSystem)GetGameSystemByType(typeof(BuildingsPlacerSystem));
             foreach (var gameSystem in _systemsToRemove.Where(gameSystem => gameSystem.GetType() == typeof(BuildingSystem)))
             {
                 placerSystem.Model.RemoveBuilding((BuildingSystem)gameSystem);

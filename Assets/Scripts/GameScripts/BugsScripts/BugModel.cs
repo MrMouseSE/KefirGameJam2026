@@ -1,5 +1,4 @@
-using System;
-using System.Linq;
+using System.Collections;
 using GameScripts.BuildingScripts;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -13,21 +12,18 @@ namespace GameScripts.BugsScripts
         
         public BugSystem System;
         public BugView View;
-
         public BuildingModel TargetBuilding;
 
-        public Action OnBugDestroyed;
-
-        private float _bugLiveTime;
-
         private GameSystemsHandler _context;
-        private bool _isDead;
         
-        //DEBUG
-        private float _timer;
-        private float _delay = 1.2f;
+        private bool _isMoving = false; 
+        private bool _isDead = false;
 
-        public void Initialize(BugSystem system, BugView view, BuildingModel target, BuildingColors color, GameSystemsHandler context)
+        private float _moveSpeed;
+        private float _distanceToTravel;
+        private float _currentDistance;
+
+        public void Initialize(BugSystem system, BugView view, BuildingModel target, BuildingColors color, GameSystemsHandler context, float travelDistance, float speed)
         {
             System = system;
             View = view;
@@ -35,84 +31,71 @@ namespace GameScripts.BugsScripts
             BugColor = color;
             _context = context;
 
-            _timer = 0;
+            View.OnStartMovingEvent += HandleStartMoving;
+            View.OnDestroySelfEvent += HandleDestroySelf;
             
-            ApplyColor();
+            _moveSpeed = speed;
+            _currentDistance = 0f;
+
+            if (travelDistance > 0)
+            {
+                _distanceToTravel = travelDistance + View.SpawnBugHeightOffset;
+                View.transform.position += Vector3.up * View.SpawnBugHeightOffset;
+            }
+            else
+            {
+                _distanceToTravel = 0;
+            }
+
+            //DEBUG
+            View.StartMoving();
         }
 
         public void UpdateModel(float deltaTime)
         {
+            if (_isDead || !_isMoving) return;
+
+            float step = _moveSpeed * deltaTime;
+
+            if (_currentDistance + step >= _distanceToTravel)
+            {
+                var remaining = _distanceToTravel - _currentDistance;
+                View.transform.Translate(Vector3.down * remaining);
+                _currentDistance += remaining;
+                
+                StartDeathSequence();
+            }
+            else
+            {
+                View.transform.Translate(Vector3.down * step);
+                _currentDistance += step;
+            }
+        }
+
+        private void HandleStartMoving()
+        {
             if (_isDead) return;
-
-            _timer += deltaTime;
-            
-            // if (View.IsAttackAnimationFinished)
-            // {
-                // EatFloors();
-                // View.IsAttackAnimationFinished = false;
-            // }
-            
-            //DEBUG
-            if (_timer >= _delay)
-            {
-                EatFloors();
-            }
+            _isMoving = true;
         }
 
-        private void ApplyColor() { }
-
-        private void EatFloors()
+        private void StartDeathSequence()
         {
-            if (TargetBuilding == null || TargetBuilding.IsRuined)
-            {
-                Die(false);
-                return;
-            }
-            
-            var floorsEatenCount = 0;
-
-            while (!TargetBuilding.IsRuined)
-            {
-                var topColor = TargetBuilding.GetTopFloorColor();
-
-                if (topColor == BugColor)
-                {
-                    TargetBuilding.RemoveFloorData(); 
-                    floorsEatenCount++;
-                }
-                else
-                {
-                    Die(true);
-                    break; 
-                }
-            }
-
-            if (floorsEatenCount > 0)
-            {
-                TargetBuilding.EnqueueVisualDestruction(floorsEatenCount);
-            }
-    
-            if (!_isDead) Die(false);
-        }
-
-        private void Die(bool exploded)
-        {
+            _isMoving = false;
             _isDead = true;
             
-            if (exploded && View.DeathSplatterParticles != null)
-            {
-                View.DeathSplatterParticles.transform.SetParent(null);
-                View.DeathSplatterParticles.Play();
-                Object.Destroy(View.DeathSplatterParticles.gameObject, 2f);
-            }
+            View.TriggerDeathAnimation();
+        }
+
+        private void HandleDestroySelf()
+        {
+            View.OnStartMovingEvent -= HandleStartMoving;
+            View.OnDestroySelfEvent -= HandleDestroySelf;
             
             var spawner = _context.GetGameSystemByType(typeof(BugSpawnSystem)) as BugSpawnSystem;
             spawner.Model.NotifyBugDied(this);
 
             _context.AddSystemToDelete(System);
-            
             Addressables.ReleaseInstance(View.gameObject);
         }
-
     }
 }

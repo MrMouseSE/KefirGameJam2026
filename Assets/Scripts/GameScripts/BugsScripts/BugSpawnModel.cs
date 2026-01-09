@@ -14,13 +14,13 @@ namespace GameScripts.BugsScripts
             _context = context;
         }
 
-        public void CreateBug(string addressKey, Vector3 position, BuildingModel target, BuildingColors color)
+        public void CreateBug(string addressKey, Vector3 position, BuildingModel target, BuildingColors color, float travelDistance, float speed)
         {
             Addressables.InstantiateAsync(addressKey, position, Quaternion.identity).Completed += (handle) =>
             {
                 if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
-                    SetupNewBug(handle.Result, target, color);
+                    SetupNewBug(handle.Result, target, color, travelDistance, speed);
                 }
                 else
                 {
@@ -29,19 +29,24 @@ namespace GameScripts.BugsScripts
             };
         }
 
-        private void SetupNewBug(GameObject go, BuildingModel target, BuildingColors color)
+        private void SetupNewBug(GameObject go, BuildingModel target, BuildingColors color, float travelDistance, float speed)
         {
             var view = go.GetComponent<BugView>();
             var model = new BugModel();
             var system = new BugSystem(model, view);
 
-            model.Initialize(system, view, target, color, _context);
+            model.Initialize(system, view, target, color, _context, travelDistance, speed);
             
             system.InitSystem(_context);
             _context.AddNewSystem(system);
         }
 
         public void NotifyBugDied(BugModel bug)
+        {
+            
+        }
+
+        public void CreateDeathParticle(string pendingBugAddress, Vector3 hitDataPoint)
         {
             
         }

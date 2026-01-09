@@ -43,7 +43,6 @@ namespace GameScripts.CannonScripts
 
             if (_inputPlayerModel.GetAttackButtonValue())
             {
-                PlayFireEffects();
                 TryFire(currentRay);
             }
 
@@ -124,6 +123,12 @@ namespace GameScripts.CannonScripts
             var buildingView = hit.collider.GetComponentInParent<BuildingView>();
             if (buildingView == null) return;
 
+            if (buildingView.Model.IsBusy)
+            {
+                Debug.LogWarning("[Cannon] Дом занят другим жуком. Выстрел отменен.");
+                return; 
+            }
+            
             // View.PlayFireEffects();
             
             var ammoData = GetNextAmmo();

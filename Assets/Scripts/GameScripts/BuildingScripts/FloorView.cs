@@ -6,6 +6,7 @@ namespace GameScripts.BuildingScripts
     public class FloorView : MonoBehaviour
     {
         public GameObject FloorPrefab;
+        public BoxCollider FloorCollider;
         public Transform FloorTransform;
         public SpriteRenderer FloorRenderer;
         public Animation FloorAnimation;
@@ -14,11 +15,8 @@ namespace GameScripts.BuildingScripts
         public ParticleSystem HitParticles;
         public ParticleSystem DestroyParticles;
         
-        public Action OnAnimationFinished;
-
-        public void AnimationFinished()
-        {
-            OnAnimationFinished?.Invoke();
-        }
+        [HideInInspector] public float FloorHeight = 1.0f;
+        public float EatingSpeed = 2.0f;
+        public float SpawnOffsetX = 0f;
     }
 }

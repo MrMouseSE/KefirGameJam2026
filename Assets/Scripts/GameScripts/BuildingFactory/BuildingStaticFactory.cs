@@ -27,6 +27,7 @@ namespace GameScripts.BuildingFactory
                 var floorPair = level.BuildingSpriteColorPairs[i];
                 var floorView = Object.Instantiate(floorPair.FloorPrefab, buildingView.FloorsTransform);
                 floorView.FloorTransform.localPosition = Vector3.up * (i * floorPair.FloorHeight);
+                floorView.FloorHeight = floorPair.FloorHeight;
                 buildingView.Floors.Add(floorView);
                 FloorData floorData = new FloorData();
                 floorData.FloorColor = level.BuildingSpriteColorPairs[i].BuildingColors[Random.Range(0,level.BuildingSpriteColorPairs[i].BuildingColors.Count)];

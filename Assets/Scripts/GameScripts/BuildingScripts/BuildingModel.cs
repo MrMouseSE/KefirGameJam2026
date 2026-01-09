@@ -81,7 +81,7 @@ namespace GameScripts.BuildingScripts
 
             if (topFloorData.FloorColor != _pendingBugColor)
             {
-                _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, _hitData.point, this, _pendingBugColor, 0, 0, null, 0);
+                _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, _hitData.point, this, _pendingBugColor, 0, 0, null, 0, null);
                 return;
             }
 
@@ -90,7 +90,7 @@ namespace GameScripts.BuildingScripts
 
             var floorsToEat = new List<FloorView>();
             
-            for (int i = _currentTopFloorIndex; i >= 0; i--)
+            for (var i = _currentTopFloorIndex; i >= 0; i--)
             {
                 if (CurrentFloors[i].FloorColor == _pendingBugColor)
                 {
@@ -120,12 +120,15 @@ namespace GameScripts.BuildingScripts
 
             _currentTopFloorIndex -= floorsEatenCount;
             
+            FloorView floorToDamage = null;
             if (_currentTopFloorIndex >= 0)
             {
+                floorToDamage = View.Floors[_currentTopFloorIndex];
+                
                 _context.CurrentDestroyedBuildings.DestroyedBuildingsValues.Add(CurrentFloors[_currentTopFloorIndex].FloorDestroyValue);
             }
 
-            _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, spawnPos, this, _pendingBugColor, travelDistance, topFloorView.EatingSpeed, floorsToEat, bugSpawnOffset);
+            _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, spawnPos, this, _pendingBugColor, travelDistance, topFloorView.EatingSpeed, floorsToEat, bugSpawnOffset, floorToDamage);
         }
 
         private void ConvertToRuins()

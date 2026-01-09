@@ -15,13 +15,13 @@ namespace GameScripts.BugsScripts
             _context = context;
         }
 
-        public void CreateBug(string addressKey, Vector3 position, BuildingModel target, BuildingColors color, float travelDistance, float speed, List<FloorView> floorsToEat, float spawnHeightOffset)
+        public void CreateBug(string addressKey, Vector3 position, BuildingModel target, BuildingColors color, float travelDistance, float speed, List<FloorView> floorsToEat, float spawnHeightOffset, FloorView floorToDamage)
         {
             Addressables.InstantiateAsync(addressKey, position, Quaternion.identity).Completed += (handle) =>
             {
                 if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
-                    SetupNewBug(handle.Result, target, color, travelDistance, speed, floorsToEat, spawnHeightOffset);
+                    SetupNewBug(handle.Result, target, color, travelDistance, speed, floorsToEat, spawnHeightOffset, floorToDamage);
                 }
                 else
                 {
@@ -30,7 +30,7 @@ namespace GameScripts.BugsScripts
             };
         }
 
-        private void SetupNewBug(GameObject go, BuildingModel target, BuildingColors color, float travelDistance, float speed, List<FloorView> floorsToEat, float spawnHeightOffset)
+        private void SetupNewBug(GameObject go, BuildingModel target, BuildingColors color, float travelDistance, float speed, List<FloorView> floorsToEat, float spawnHeightOffset, FloorView floorToDamage)
         {
             var view = go.GetComponent<BugView>();
             
@@ -60,11 +60,10 @@ namespace GameScripts.BugsScripts
                 }
             }
             
-            
             var model = new BugModel();
             var system = new BugSystem(model, view);
             
-            model.Initialize(system, view, target, color, _context, travelDistance, speed, floorsToEat, spawnHeightOffset);
+            model.Initialize(system, view, target, color, _context, travelDistance, speed, floorsToEat, spawnHeightOffset, floorToDamage);
             
             system.InitSystem(_context);
             _context.AddNewSystem(system);

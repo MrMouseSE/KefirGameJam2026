@@ -15,7 +15,8 @@ namespace GameScripts.BuildingScripts
         public ParticleSystem HitParticles;
         public ParticleSystem DestroyParticles;
         public FloorAnimationEvents FloorAnimationEvents;
-
+        [HideInInspector] public Sprite DestructionSprite;
+        
         public float EatingSpeed = 2.0f;
         
         [HideInInspector] public float FloorHeight = 1.0f;

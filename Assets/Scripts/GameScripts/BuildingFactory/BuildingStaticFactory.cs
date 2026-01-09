@@ -40,6 +40,7 @@ namespace GameScripts.BuildingFactory
                 floorData.FloorColor = level.BuildingSpriteColorPairs[i].BuildingColors[Random.Range(0,level.BuildingSpriteColorPairs[i].BuildingColors.Count)];
                 floorData.FloorDestroyValue = level.FloorDestroyValue;
                 floorView.FloorRenderer.sprite = level.BuildingSpriteColorPairs[i].FloorSprite;
+                floorView.DestructionSprite = level.BuildingSpriteColorPairs[i].FloorDestructionSprite;
                 floorView.FloorRenderer.material.SetTexture(TintGradientID, _levelDescription.SpriteColorByBuildingColor.Find(x => x.BuildingColor == floorData.FloorColor).SpriteColorValue);
                 buildingData.FloorsData.Add(floorData);
             }

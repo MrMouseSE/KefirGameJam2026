@@ -27,9 +27,10 @@ namespace GameScripts.BugsScripts
         private List<FloorView> _floorsToEat;
         private int _currentFloorIndex;
         private float _nextHideThreshold;
+        private FloorView _floorToDamage;
 
         public void Initialize(BugSystem system, BugView view, BuildingModel target, BuildingColors color,
-            GameSystemsHandler context, float travelDistance, float speed, List<FloorView> floorsToEat, float spawnHeightOffset)
+            GameSystemsHandler context, float travelDistance, float speed, List<FloorView> floorsToEat, float spawnHeightOffset, FloorView floorToDamage)
         {
             System = system;
             View = view;
@@ -37,7 +38,8 @@ namespace GameScripts.BugsScripts
             BugColor = color;
             _context = context;
             _floorsToEat = floorsToEat;
-
+            _floorToDamage = floorToDamage;
+            
             View.BugAnimationEvents.OnStartMovingEvent += HandleStartMoving;
             View.BugAnimationEvents.OnReadyToDestroyEvent += HandleDestroySelf;
 
@@ -61,6 +63,11 @@ namespace GameScripts.BugsScripts
             }
             else
             {
+                if (_floorToDamage != null && _floorToDamage.DestructionSprite != null)
+                {
+                    _floorToDamage.FloorRenderer.sprite = _floorToDamage.DestructionSprite;
+                }
+                
                 View.TriggerInstantDeathAnimation();
                 _distanceToTravel = 0;
             }
@@ -135,6 +142,11 @@ namespace GameScripts.BugsScripts
             _isMoving = false;
             _isDead = true;
 
+            if (_floorToDamage != null && _floorToDamage.DestructionSprite != null)
+            {
+                _floorToDamage.FloorRenderer.sprite = _floorToDamage.DestructionSprite;
+            }
+            
             View.TriggerDeathAnimation();
         }
 

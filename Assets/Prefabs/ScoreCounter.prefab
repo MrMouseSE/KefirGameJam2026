@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 134.125, y: -24.21}
+  m_AnchoredPosition: {x: 148.525, y: -24.21}
   m_SizeDelta: {x: 16.31, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3542434071715567115
@@ -306,8 +306,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 62.985, y: -24.21}
-  m_SizeDelta: {x: 125.97, y: 0}
+  m_AnchoredPosition: {x: 70.185, y: -24.21}
+  m_SizeDelta: {x: 140.37, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3088580091247597583
 CanvasRenderer:
@@ -337,7 +337,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score:'
+  m_text: 'Score: \t
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bff6e967e21bff0459aa429f80fbd918, type: 2}
   m_sharedMaterial: {fileID: 5641749074418810767, guid: bff6e967e21bff0459aa429f80fbd918, type: 2}

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,8 +7,15 @@ namespace MenuScripts
     public class MenuSceneHandler : MonoBehaviour
     {
         public Camera MainCamera;
+        
+        public StartButtonHandler StartButton;
 
         public GameObject[] MenuSceneObjects;
+
+        private void Awake()
+        {
+            StartButton.OnSceneLoaded += DeactivateMenuScene;
+        }
 
         public void DeactivateMenuScene()
         {

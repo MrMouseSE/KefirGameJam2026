@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 11497181654208643}
+  - component: {fileID: 574247888240631744}
   m_Layer: 0
   m_Name: AnimationRoot
   m_TagString: Untagged
@@ -27,11 +28,28 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5452587721004893338}
   m_Father: {fileID: 5158543458218061512}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!111 &574247888240631744
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975647606878016544}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 2286a77a101f69049970e29f2a678542, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 2286a77a101f69049970e29f2a678542, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &2892091306230272626
 GameObject:
   m_ObjectHideFlags: 0

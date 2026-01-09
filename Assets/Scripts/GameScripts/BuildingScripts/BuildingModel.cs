@@ -81,7 +81,7 @@ namespace GameScripts.BuildingScripts
 
             if (topFloorData.FloorColor != _pendingBugColor)
             {
-                _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, _hitData.point, this, _pendingBugColor, 0, 0, null);
+                _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, _hitData.point, this, _pendingBugColor, 0, 0, null, 0);
                 return;
             }
 
@@ -105,9 +105,13 @@ namespace GameScripts.BuildingScripts
                 }
             }
 
+            var bugSpawnOffset = topFloorView.BugSpawnOffsetY;
+            
             if (topFloorView.EatingSpeed > 0)
             {
-                _busyTimer = (travelDistance / topFloorView.EatingSpeed) + 0.5f;
+                var deathAnimationBuffer = 1.5f;
+
+                _busyTimer = ((travelDistance + bugSpawnOffset) / topFloorView.EatingSpeed) + deathAnimationBuffer;
             }
             
             var spawnPos = topFloorView.transform.position;
@@ -115,9 +119,13 @@ namespace GameScripts.BuildingScripts
             spawnPos.x += topFloorView.SpawnOffsetX;
 
             _currentTopFloorIndex -= floorsEatenCount;
-            _context.CurrentDestroyedBuildings.DestroyedBuildingsValues.Add(CurrentFloors[_currentTopFloorIndex].FloorDestroyValue);
+            
+            if (_currentTopFloorIndex >= 0)
+            {
+                _context.CurrentDestroyedBuildings.DestroyedBuildingsValues.Add(CurrentFloors[_currentTopFloorIndex].FloorDestroyValue);
+            }
 
-            _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, spawnPos, this, _pendingBugColor, travelDistance, topFloorView.EatingSpeed, floorsToEat);
+            _bugSpawnSystem.Model.CreateBug(_pendingBugAddress, spawnPos, this, _pendingBugColor, travelDistance, topFloorView.EatingSpeed, floorsToEat, bugSpawnOffset);
         }
 
         private void ConvertToRuins()

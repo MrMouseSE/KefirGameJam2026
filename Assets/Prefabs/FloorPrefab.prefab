@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7996442938780038914}
   - component: {fileID: 8568065075063280879}
   - component: {fileID: 1849630247855074487}
+  - component: {fileID: 1518198500593997399}
   m_Layer: 0
   m_Name: FloorAnimationRoot
   m_TagString: Untagged
@@ -73,6 +74,19 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
+--- !u!114 &1518198500593997399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462334525638469843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88167f8678334d2a85683a87c360121c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameScripts.FloorAnimationEvents
+  ParentFloor: {fileID: 9077172280243770836}
 --- !u!1 &1881548777514422072
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +266,7 @@ MonoBehaviour:
   FloorHitClip: {fileID: 7400000, guid: b98eb5a82406ffe4bbf243ae0e75e3e6, type: 2}
   HitParticles: {fileID: 3450824760130866004}
   DestroyParticles: {fileID: 9096816817533547146}
+  FloorAnimationEvents: {fileID: 1518198500593997399}
   FloorHeight: 1
   EatingSpeed: 2
   SpawnOffsetX: 0

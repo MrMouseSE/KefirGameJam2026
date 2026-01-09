@@ -29,7 +29,7 @@ namespace GameScripts.BugsScripts
         private float _nextHideThreshold;
 
         public void Initialize(BugSystem system, BugView view, BuildingModel target, BuildingColors color,
-            GameSystemsHandler context, float travelDistance, float speed, List<FloorView> floorsToEat)
+            GameSystemsHandler context, float travelDistance, float speed, List<FloorView> floorsToEat, float spawnHeightOffset)
         {
             System = system;
             View = view;
@@ -46,14 +46,18 @@ namespace GameScripts.BugsScripts
 
             if (travelDistance > 0)
             {
-                _distanceToTravel = travelDistance + View.SpawnBugHeightOffset;
+                _distanceToTravel = travelDistance + spawnHeightOffset;
 
-                View.transform.position += Vector3.up * View.SpawnBugHeightOffset;
+                View.transform.position += Vector3.up * spawnHeightOffset;
                 View.TriggerAppearAnimation();
 
                 _currentFloorIndex = 0;
                 if (_floorsToEat.Count > 0)
-                    _nextHideThreshold = View.SpawnBugHeightOffset + _floorsToEat[0].FloorHeight;
+                {
+                    _nextHideThreshold = spawnHeightOffset + _floorsToEat[0].FloorHeight;
+                    
+                    SetFloorMasking(_floorsToEat[0]);
+                }
             }
             else
             {
@@ -75,7 +79,7 @@ namespace GameScripts.BugsScripts
                     var floorToHide = _floorsToEat[_currentFloorIndex];
                     if (floorToHide != null)
                     {
-                        floorToHide.gameObject.SetActive(false);
+                        floorToHide.PlayDestroyAnimation();
                     }
 
                     _currentFloorIndex++;
@@ -83,10 +87,12 @@ namespace GameScripts.BugsScripts
                     if (_currentFloorIndex < _floorsToEat.Count)
                     {
                         _nextHideThreshold += _floorsToEat[_currentFloorIndex].FloorHeight;
+                        
+                        SetFloorMasking(_floorsToEat[_currentFloorIndex]);
                     }
                 }
             }
-
+            
             if (_currentDistance + step >= _distanceToTravel)
             {
                 var remaining = _distanceToTravel - _currentDistance;
@@ -100,6 +106,22 @@ namespace GameScripts.BugsScripts
                 View.transform.Translate(Vector3.down * step);
                 _currentDistance += step;
             }
+        }
+
+        private void SetFloorMasking(FloorView floor)
+        {
+            floor.FloorRenderer.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+            
+            floor.FloorAnimationEvents.OnAnimationEventTriggered += HandleFloorHideEvent;
+            
+            floor.PlayEatAnimation();
+        }
+
+        private void HandleFloorHideEvent(FloorView floor)
+        {
+            floor.FloorAnimationEvents.OnAnimationEventTriggered -= HandleFloorHideEvent;
+            
+            floor.gameObject.SetActive(false);
         }
 
         private void HandleStartMoving()

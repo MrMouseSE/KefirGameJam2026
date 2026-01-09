@@ -14,9 +14,24 @@ namespace GameScripts.BuildingScripts
         public AnimationClip FloorHitClip;
         public ParticleSystem HitParticles;
         public ParticleSystem DestroyParticles;
+        public FloorAnimationEvents FloorAnimationEvents;
+
+        public float EatingSpeed = 2.0f;
         
         [HideInInspector] public float FloorHeight = 1.0f;
-        public float EatingSpeed = 2.0f;
-        public float SpawnOffsetX = 0f;
+        [HideInInspector] public float SpawnOffsetX = 0f;
+        [HideInInspector] public float BugSpawnOffsetY = 0f;
+        
+        public void PlayEatAnimation()
+        {
+            FloorAnimation.clip = FloorHitClip;
+            FloorAnimation.Play();
+        }
+
+        public void PlayDestroyAnimation()
+        {
+            FloorAnimation.clip = FloodDestroyClip;
+            FloorAnimation.Play();
+        }
     }
 }

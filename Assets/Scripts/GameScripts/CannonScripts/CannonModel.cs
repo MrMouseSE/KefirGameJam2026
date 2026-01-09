@@ -10,13 +10,14 @@ namespace GameScripts.CannonScripts
     public class CannonModel
     {
         private const string DEFAULT_BUG_KEY = "DefaultBug";
-        
+
         public Queue<AmmoData> AmmoQueue = new();
         public CannonView View;
         public bool IsReady => CurrentCooldown <= 0;
-        
+
         private float CurrentCooldown { get; set; }
         private List<BuildingColors> _cachedWeightedColors = new List<BuildingColors>();
+        private Dictionary<BuildingColors, SpriteColorByBuildingColor> _visualsMap;
         private string _cachedDefaultAddress;
         private InputPlayerModel _inputPlayerModel;
 
@@ -24,21 +25,23 @@ namespace GameScripts.CannonScripts
         {
             View = view;
             var inputSystem = (InputPlayerSystem)context.GetGameSystemByType(typeof(InputPlayerSystem));
-            
+
             _inputPlayerModel = inputSystem.Model;
-            
+
             var levelData = context.CurrentLevelDescription;
-            if (levelData != null) LoadLevelAmmo(levelData, DEFAULT_BUG_KEY);
+            LoadLevelAmmo(levelData, DEFAULT_BUG_KEY);
+            InitializeVisualsMap(levelData);
+            UpdateAmmoVisuals();
         }
-        
+
         public void UpdateModel(float deltaTime, GameSystemsHandler context)
         {
             UpdateCooldown(deltaTime);
-            
+
             var camera = _inputPlayerModel.GetMainCamera();
             var mousePos = _inputPlayerModel.GetMousePosition();
             var currentRay = camera.ScreenPointToRay(mousePos);
-            
+
             Aim(currentRay, deltaTime);
 
             if (_inputPlayerModel.GetAttackButtonValue())
@@ -57,14 +60,14 @@ namespace GameScripts.CannonScripts
             // <summary>
             // Раскомментить когда будет эффект
             // </summary>
-            
+
             // View.ShootParticles.Play();
         }
 
         private void Aim(Ray ray, float deltaTime)
         {
             Vector3 targetPoint;
-            
+
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 targetPoint = hit.point;
@@ -80,14 +83,14 @@ namespace GameScripts.CannonScripts
         private void RotateCannon(Vector3 lookTarget, float deltaTime)
         {
             var direction = lookTarget - View.CannonRoot.position;
-            
+
             if (direction == Vector3.zero) return;
 
             var targetRotation = Quaternion.LookRotation(direction);
 
             View.CannonRoot.rotation = Quaternion.RotateTowards(
-                View.CannonRoot.rotation, 
-                targetRotation, 
+                View.CannonRoot.rotation,
+                targetRotation,
                 View.CannonRotatonSpeed * deltaTime
             );
         }
@@ -100,43 +103,45 @@ namespace GameScripts.CannonScripts
                 _inputPlayerModel.ResetAttackButtonValue();
                 return;
             }
-            
+
             Vector3 targetPoint;
-            
+
             targetPoint = Physics.Raycast(ray, out RaycastHit aimHit) ? aimHit.point : ray.GetPoint(100f);
-            
+
             var directionToTarget = (targetPoint - View.CannonRoot.position).normalized;
 
             var angle = Vector3.Angle(View.CannonRoot.forward, directionToTarget);
 
-            if (angle > 5.0f) 
+            if (angle > 5.0f)
             {
                 Debug.LogWarning("Пушка еще наводится!");
-                return; 
+                return;
             }
-            
+
             _inputPlayerModel.ResetAttackButtonValue();
             LogAmmoDebug();
-            
+
             if (!Physics.Raycast(ray, out RaycastHit hit)) return;
-            
+
             var buildingView = hit.collider.GetComponentInParent<BuildingView>();
             if (buildingView == null) return;
 
             if (buildingView.Model.IsBusy)
             {
                 Debug.LogWarning("[Cannon] Дом занят другим жуком. Выстрел отменен.");
-                return; 
+                return;
             }
-            
+
             // View.PlayFireEffects();
-            
+
             var ammoData = GetNextAmmo();
+
+            UpdateAmmoVisuals();
             
             var bugAddress = "DefaultBug";
-            
+
             buildingView.Model.SetBuildingHitted(hit, bugAddress, ammoData.Color);
-            
+
             SetCooldown(View.FireCooldown);
         }
 
@@ -147,20 +152,50 @@ namespace GameScripts.CannonScripts
                 _inputPlayerModel.ResetReloadButtonValue();
                 return;
             }
-            
+
             _inputPlayerModel.ResetReloadButtonValue();
-            
+
             LogAmmoDebug();
-            
+
             GetNextAmmo();
+            UpdateAmmoVisuals();
             SetCooldown(View.FireCooldown);
         }
 
+        private void InitializeVisualsMap(LevelDescription levelData)
+        {
+            _visualsMap = new Dictionary<BuildingColors, SpriteColorByBuildingColor>();
+            
+            if (levelData.SpriteColorByBuildingColor == null) return;
+
+            foreach (var item in levelData.SpriteColorByBuildingColor)
+            {
+                _visualsMap.Add(item.BuildingColor, item);
+            }
+        }
+        
+        private void UpdateAmmoVisuals()
+        {
+            var currentAmmo = PeekNextAmmo(0); 
+            var nextAmmo = PeekNextAmmo(1);
+
+            _visualsMap.TryGetValue(currentAmmo.Color, out var currentVisual);
+            _visualsMap.TryGetValue(nextAmmo.Color, out var nextVisual);
+
+            ApplyVisualToRenderer(View.CurrentBugSprite, currentVisual);
+            ApplyVisualToRenderer(View.NextBugSprite, nextVisual);
+        }
+        
+        private void ApplyVisualToRenderer(SpriteRenderer renderer, SpriteColorByBuildingColor data)
+        {
+            renderer.material.SetTexture("_TintGradient", data.SpriteColorValue);
+        }
+        
         private void LogAmmoDebug()
         {
             var realCount = AmmoQueue.Count;
 
-            var currentAmmo = PeekNextAmmo(0); 
+            var currentAmmo = PeekNextAmmo(0);
             var nextAmmo = PeekNextAmmo(1);
 
             var currentTag = (0 >= realCount) ? "[INF]" : "[REAL]";
@@ -188,7 +223,7 @@ namespace GameScripts.CannonScripts
                 .Distinct();
 
             _cachedWeightedColors.AddRange(uniqueColors);
-            
+
             if (_cachedWeightedColors.Count == 0) _cachedWeightedColors.Add(BuildingColors.Red);
 
             var totalBugsToSpawn = levelDescription.GetBugsCount();

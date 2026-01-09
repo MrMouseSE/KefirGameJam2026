@@ -29,6 +29,8 @@ namespace GameScripts.BuildingFactory
                 var floorView = Object.Instantiate(floorPair.FloorPrefab, buildingView.FloorsTransform);
                 floorView.FloorTransform.localPosition = Vector3.up * (i * floorPair.FloorHeight);
                 floorView.FloorHeight = floorPair.FloorHeight;
+                floorView.SpawnOffsetX = floorPair.FloorXOffset;
+                floorView.BugSpawnOffsetY = floorPair.BugYOffsetAtFloor;
                 var spriteSize = floorView.FloorCollider.size = floorPair.FloorSprite.bounds.size;
                 var renderScale = floorView.FloorRenderer.transform.localScale;
                 floorView.FloorCollider.size = new Vector3(spriteSize.x * renderScale.x, spriteSize.y * renderScale.y, 0.02F);
